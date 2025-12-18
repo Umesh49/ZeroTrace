@@ -72,9 +72,7 @@ a:hover {
     text-decoration: none;
 }
 
-/* ========================================
-   Global Typography - Consistent Headings
-   ======================================== */
+/* Global Typography - Consistent Headings */
 
 h1,
 h2,
@@ -160,10 +158,7 @@ p {
     margin: 0 auto;
 }
 
-/* ========================================
-   Standardized Page Headers
-   Use these classes for consistent page titles
-   ======================================== */
+/*Standardized Page Headers Use these classes for consistent page titles */
 
 .page-header {
     text-align: center;

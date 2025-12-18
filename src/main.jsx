@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App'
 import { ModalProvider } from './context/ModalContext'
+import './firebase'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

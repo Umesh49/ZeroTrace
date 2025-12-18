@@ -8,7 +8,7 @@ A comprehensive cybersecurity awareness and education platform designed to help 
 
 ## 🌐 Live Demo
 
-**Website:** [https://zerotrace.in](https://zerotrace.in)
+**Website:** [https://zero-trace-uy.web.app](https://zero-trace-uy.web.app)
 
 ---
 
@@ -20,7 +20,6 @@ A comprehensive cybersecurity awareness and education platform designed to help 
 - [Environment Variables](#-environment-variables)
 - [Project Structure](#-project-structure)
 - [Security Tools](#-security-tools)
-- [Screenshots](#-screenshots)
 - [Contributing](#-contributing)
 - [License](#-license)
 
@@ -124,7 +123,17 @@ VITE_IPQS_API_KEY=your_ipqualityscore_key
 VITE_ABUSE_IPDB_KEY=your_abuseipdb_key
 ```
 
-> **Note:** The application works without API keys with limited functionality. The chatbot uses rule-based responses when no AI keys are configured.
+> **Note:** The application works without API keys with limited functionality. The chatbot uses rule-based responses when no AI keys are configured. On the live demo, certain functionalities may be limited if integrated API keys expire.
+
+### Demo Credentials
+
+For testing purposes, use the following credentials:
+
+| Field | Value |
+|-------|-------|
+| Password | `12345678` |
+
+> *(The most secure password which isn't secure 😄)*
 
 ---
 
@@ -187,12 +196,6 @@ zerotrace/
 | 12 | **Privacy Tester** | Test browser privacy settings |
 | 13 | **Browser Fingerprinting** | Demonstrate browser fingerprinting |
 | 14 | **Privacy Policy Analyzer** | Analyze and rate privacy policies |
-
----
-
-## 📸 Screenshots
-
-*Coming soon*
 
 ---
 
