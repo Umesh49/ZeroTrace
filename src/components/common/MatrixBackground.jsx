@@ -1,15 +1,18 @@
-import { useEffect, useRef, useMemo, useState } from "react"
+import { useEffect, useRef, useMemo, useState, useCallback } from "react"
 import React from "react"
 
-function MatrixBackground({ 
-  opacity = 0.2, 
-  speed = 1.2, 
-  density = 1, 
+function MatrixBackground({
+  opacity = 0.2,
+  speed = 1.2,
+  density = 1,
   colorVariant = "cyber",
-  securityMode = true 
+  securityMode = true
 }) {
   const canvasRef = useRef(null)
-  const [securitySymbols, setSecuritySymbols] = useState([])
+  const securitySymbolsRef = useRef([])
+  const isVisibleRef = useRef(true)
+  const isPausedRef = useRef(false)
+  const [, forceUpdate] = useState(0) // For initial render only
 
   // Define color variants with cybersecurity focus
   const colorVariants = useMemo(
@@ -48,45 +51,70 @@ function MatrixBackground({
     []
   )
 
-  // Enhanced security symbols for cybersecurity theme
-  useEffect(() => {
-    // Generate cybersecurity-related messages
-    const securityMessages = [
-      "ACCESS DENIED", "BREACH DETECTED", "ENCRYPTION ACTIVE", 
-      "FIREWALL ENABLED", "INTRUSION ALERT", "MALWARE FOUND",
-      "PORT SCANNING", "BACKDOOR DETECTED", "BUFFER OVERFLOW",
-      "KEYLOGGER ACTIVE", "SQL INJECTION", "XSS ATTACK",
-      "ROOT ACCESS", "SHELL ACCESS", "ADMIN PRIVILEGES",
-      "PHISHING ALERT", "DDoS DETECTED", "RANSOMWARE",
-      "CVE-2023-12345", "ZERO-DAY", "APT DETECTED"
-    ]
+  // Security messages for the matrix effect
+  const securityMessages = useMemo(() => [
+    "ACCESS DENIED", "BREACH DETECTED", "ENCRYPTION ACTIVE",
+    "FIREWALL ENABLED", "INTRUSION ALERT", "MALWARE FOUND",
+    "PORT SCANNING", "BACKDOOR DETECTED", "BUFFER OVERFLOW",
+    "KEYLOGGER ACTIVE", "SQL INJECTION", "XSS ATTACK",
+    "ROOT ACCESS", "SHELL ACCESS", "ADMIN PRIVILEGES",
+    "PHISHING ALERT", "DDoS DETECTED", "RANSOMWARE",
+    "CVE-2023-12345", "ZERO-DAY", "APT DETECTED"
+  ], [])
 
-    // Security symbols to be placed on canvas
-    setSecuritySymbols(
-      Array(4).fill().map(() => ({
-        text: securityMessages[Math.floor(Math.random() * securityMessages.length)],
-        x: Math.random(),
-        y: Math.random(),
-        opacity: 0,
-        fadeDirection: 1, // 1 for fade in, -1 for fade out
-        fadeSpeed: Math.random() * 0.01 + 0.005,
-        displayed: false,
-        displayTime: 0,
-        maxTime: Math.random() * 150 + 100 // How long to stay visible
-      }))
+  // Initialize security symbols once (using ref to avoid re-renders)
+  useEffect(() => {
+    securitySymbolsRef.current = Array(4).fill().map(() => ({
+      text: securityMessages[Math.floor(Math.random() * securityMessages.length)],
+      x: Math.random(),
+      y: Math.random(),
+      opacity: 0,
+      fadeDirection: 1,
+      fadeSpeed: Math.random() * 0.01 + 0.005,
+      displayed: false,
+      displayTime: 0,
+      maxTime: Math.random() * 150 + 100
+    }))
+  }, [securityMessages])
+
+  // Visibility-based pause using Intersection Observer and Page Visibility API
+  useEffect(() => {
+    const canvas = canvasRef.current
+    if (!canvas) return
+
+    // Intersection Observer - pause when canvas is not visible
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          isVisibleRef.current = entry.isIntersecting
+        })
+      },
+      { threshold: 0.1 }
     )
+    observer.observe(canvas)
+
+    // Page Visibility API - pause when tab is hidden
+    const handleVisibilityChange = () => {
+      isPausedRef.current = document.hidden
+    }
+    document.addEventListener('visibilitychange', handleVisibilityChange)
+
+    return () => {
+      observer.disconnect()
+      document.removeEventListener('visibilitychange', handleVisibilityChange)
+    }
   }, [])
 
   useEffect(() => {
     const canvas = canvasRef.current
     if (!canvas) return
 
-    const ctx = canvas.getContext("2d")
+    const ctx = canvas.getContext("2d", { alpha: true })
     if (!ctx) return
 
     let animationId
     let lastTime = 0
-    const frameRate = 30 // Optimized framerate
+    const frameRate = 24 // Reduced framerate for better performance
     let frameCount = 0
 
     // Set canvas dimensions with device pixel ratio for sharpness
@@ -176,34 +204,31 @@ function MatrixBackground({
     const updateSecuritySymbols = () => {
       if (!securityMode) return
 
-      securitySymbols.forEach((symbol, index) => {
+      securitySymbolsRef.current.forEach((symbol, index) => {
         // Update opacity based on fade direction
         symbol.opacity += symbol.fadeSpeed * symbol.fadeDirection
-        
+
         // Check if we need to change fade direction
         if (symbol.opacity >= 0.8) {
           symbol.fadeDirection = 0 // Stop fading, just display
           symbol.displayed = true
         }
-        
+
         // Update display time if symbol is fully displayed
         if (symbol.displayed) {
           symbol.displayTime++
-          
+
           // Start fading out when display time is up
           if (symbol.displayTime >= symbol.maxTime) {
             symbol.fadeDirection = -1
             symbol.displayed = false
           }
         }
-        
+
         // Reset symbol when it fades out completely
         if (symbol.opacity <= 0 && symbol.fadeDirection === -1) {
-          securitySymbols[index] = {
-            text: ["ACCESS DENIED", "BREACH DETECTED", "ENCRYPTION ACTIVE", 
-                   "FIREWALL ENABLED", "INTRUSION ALERT", "MALWARE FOUND",
-                   "PORT SCANNING", "BACKDOOR DETECTED", "BUFFER OVERFLOW",
-                   "KEYLOGGER ACTIVE", "SQL INJECTION", "XSS ATTACK"][Math.floor(Math.random() * 12)],
+          securitySymbolsRef.current[index] = {
+            text: securityMessages[Math.floor(Math.random() * 12)],
             x: Math.random(),
             y: Math.random(),
             opacity: 0,
@@ -220,30 +245,30 @@ function MatrixBackground({
     // Draw security message
     const drawSecurityMessages = () => {
       if (!securityMode) return
-      
+
       const width = canvas.width / window.devicePixelRatio
       const height = canvas.height / window.devicePixelRatio
-      
-      securitySymbols.forEach(symbol => {
+
+      securitySymbolsRef.current.forEach(symbol => {
         if (symbol.opacity > 0) {
           const colorSet = colorVariants[colorVariant]
           const x = symbol.x * width
           const y = symbol.y * height
-          
+
           // Draw background for better readability
           ctx.fillStyle = `rgba(0, 0, 0, ${symbol.opacity * 0.7})`
           ctx.fillRect(
-            x - 5, 
-            y - fontSize - 5, 
-            symbol.text.length * (fontSize * 0.6) + 10, 
+            x - 5,
+            y - fontSize - 5,
+            symbol.text.length * (fontSize * 0.6) + 10,
             fontSize + 10
           )
-          
+
           // Draw text with glowing effect
           ctx.font = `bold ${fontSize}px "JetBrains Mono", monospace`
           ctx.fillStyle = colorSet.rare[0].replace(", ", `, ${symbol.opacity * opacity * 1.5})`)
           ctx.fillText(symbol.text, x, y)
-          
+
           // Add subtle glow effect
           ctx.shadowColor = colorSet.rare[0].replace(", ", `, ${symbol.opacity})`)
           ctx.shadowBlur = 5
@@ -259,10 +284,10 @@ function MatrixBackground({
 
       const width = canvas.width / window.devicePixelRatio
       const height = canvas.height / window.devicePixelRatio
-      
+
       ctx.font = `${fontSize * 0.8}px "JetBrains Mono", monospace`
       ctx.fillStyle = `rgba(150, 150, 150, ${opacity * 0.7})`
-      
+
       // Draw hex addresses on the left side
       for (let y = fontSize; y < height; y += fontSize * 4) {
         const addr = (Math.random() * 0xFFFFFF).toString(16).padStart(6, '0').toUpperCase()
@@ -272,6 +297,12 @@ function MatrixBackground({
 
     // Enhanced drawing function with optimized performance
     const draw = (timestamp) => {
+      // Skip if not visible or tab is hidden
+      if (!isVisibleRef.current || isPausedRef.current) {
+        animationId = requestAnimationFrame(draw)
+        return
+      }
+
       // Throttle frames for performance
       if (timestamp - lastTime < 1000 / frameRate) {
         animationId = requestAnimationFrame(draw)
@@ -340,7 +371,7 @@ function MatrixBackground({
         // Dynamic character flickering with occasional security focus
         if (Math.random() > 0.996) {
           brightness[i] = Math.random() * 0.5 + 0.5
-          
+
           // Occasionally change character type for dynamic effect
           if (Math.random() > 0.8 && securityMode) {
             charTypes[i] = Math.floor(Math.random() * 3)
@@ -368,9 +399,9 @@ function MatrixBackground({
       if (frameCount % 30 === 0) {
         updateSecuritySymbols()
       }
-      
+
       drawSecurityMessages()
-      
+
       // Draw address markers every 120 frames to avoid too much visual noise
       if (frameCount % 120 === 0) {
         drawAddressMarkers()
@@ -392,35 +423,35 @@ function MatrixBackground({
       window.removeEventListener("resize", resizeCanvas)
       cancelAnimationFrame(animationId)
     }
-  }, [opacity, speed, density, colorVariant, colorVariants, securityMode, securitySymbols])
+  }, [opacity, speed, density, colorVariant, colorVariants, securityMode, securityMessages])
 
   return (
     <canvas
-    ref={canvasRef}
-    className="savdhaan-matrix-canvas"
-    style={{
-      position: "fixed",
-      top: 0,
-      left: 0,
-      width: "100%",
-      height: "100%",
-      zIndex: -1,
-      opacity: 1, // We control opacity through the color values
-      pointerEvents: "none",
-    }}
-    aria-hidden="true"
-  />
-)
+      ref={canvasRef}
+      className="savdhaan-matrix-canvas"
+      style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        width: "100%",
+        height: "100%",
+        zIndex: -1,
+        opacity: 1, // We control opacity through the color values
+        pointerEvents: "none",
+      }}
+      aria-hidden="true"
+    />
+  )
 }
 
 // Add performance optimization with memoization
 export default React.memo(MatrixBackground, (prevProps, nextProps) => {
-// Only re-render if these props change
-return (
-  prevProps.opacity === nextProps.opacity &&
-  prevProps.speed === nextProps.speed &&
-  prevProps.density === nextProps.density &&
-  prevProps.colorVariant === nextProps.colorVariant &&
-  prevProps.securityMode === nextProps.securityMode
-)
+  // Only re-render if these props change
+  return (
+    prevProps.opacity === nextProps.opacity &&
+    prevProps.speed === nextProps.speed &&
+    prevProps.density === nextProps.density &&
+    prevProps.colorVariant === nextProps.colorVariant &&
+    prevProps.securityMode === nextProps.securityMode
+  )
 })

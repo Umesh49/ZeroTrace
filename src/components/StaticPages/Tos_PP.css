@@ -1,38 +1,24 @@
 .pp-tos-theme {
-  --primary-color: #00ffaa;
-  --primary-dim: rgba(0, 255, 170, 0.7);
-  --primary-glow: rgba(0, 255, 170, 0.2);
-  --secondary-color: #030812;
-  --accent-color: #ff3e00;
-  --bg-dark: #080e17;
-  --bg-medium: #0a1020;
-  --bg-light: #152030;
-  --text-primary: #e0e0e0;
-  --text-secondary: #b0b0b0;
-  --border-color: #2a2a2a;
-  --neon-glow: 0 0 10px rgba(0, 255, 170, 0.5), 0 0 20px rgba(0, 255, 170, 0.2);
-  --neon-glow-strong: 0 0 10px rgba(0, 255, 170, 0.7), 0 0 25px rgba(0, 255, 170, 0.3);
-  --tos-pp-panel-bg: rgba(8, 14, 23, 0.85);
-  --terminal-green: #00ffaa;
-  --error-red: #ff3e00;
-  --cyberdeck-border: 1px solid var(--primary-dim);
-  --font-mono: "Courier New", monospace;
-  --font-sans: "Rajdhani", "Orbitron", sans-serif;
+  /* Inherits global variables from index.css */
 }
 
 @keyframes glitch {
   0% {
     text-shadow: 2px 2px 0px var(--accent-color), -1px -1px 0px var(--secondary-color);
   }
+
   25% {
     text-shadow: -2px 2px 0px var(--accent-color), 1px -1px 0px var(--secondary-color);
   }
+
   50% {
     text-shadow: 2px -2px 0px var(--accent-color), -1px 1px 0px var(--secondary-color);
   }
+
   75% {
     text-shadow: -2px -2px 0px var(--accent-color), 1px 1px 0px var(--secondary-color);
   }
+
   100% {
     text-shadow: 2px 2px 0px var(--accent-color), -1px -1px 0px var(--secondary-color);
   }
@@ -43,30 +29,37 @@
     text-shadow: 2px 2px 0px var(--accent-color), -1px -1px 0px var(--secondary-color);
     transform: translateX(0);
   }
+
   25% {
     text-shadow: -2px 2px 0px var(--accent-color), 1px -1px 0px var(--secondary-color);
     transform: translateX(-2px);
   }
+
   26% {
     text-shadow: 2px -2px 0px var(--accent-color), -1px 1px 0px var(--secondary-color);
     transform: translateX(2px);
   }
+
   50% {
     text-shadow: 2px -2px 0px var(--accent-color), -1px 1px 0px var(--secondary-color);
     transform: translateY(1px);
   }
+
   75% {
     text-shadow: -2px -2px 0px var(--accent-color), 1px 1px 0px var(--secondary-color);
     transform: translateY(-1px);
   }
+
   76% {
     text-shadow: none;
     transform: none;
   }
+
   77% {
     text-shadow: 2px 2px 0px var(--accent-color), -1px -1px 0px var(--secondary-color);
     transform: none;
   }
+
   100% {
     text-shadow: 2px 2px 0px var(--accent-color), -1px -1px 0px var(--secondary-color);
     transform: translateX(0);
@@ -77,16 +70,19 @@
   0% {
     transform: translateY(-100px);
   }
+
   100% {
     transform: translateY(2000px);
   }
 }
 
 @keyframes blink {
+
   0%,
   100% {
     opacity: 1;
   }
+
   50% {
     opacity: 0;
   }
@@ -96,6 +92,7 @@
   0% {
     left: -100%;
   }
+
   100% {
     left: 100%;
   }
@@ -105,16 +102,19 @@
   from {
     width: 0;
   }
+
   to {
     width: 100%;
   }
 }
 
 @keyframes blink-caret {
+
   from,
   to {
     border-color: transparent;
   }
+
   50% {
     border-color: var(--primary-color);
   }
@@ -125,6 +125,7 @@
     opacity: 0;
     transform: translateY(20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -149,10 +150,12 @@
 }
 
 @keyframes textGlow {
+
   0%,
   100% {
     text-shadow: 0 0 5px var(--primary-dim);
   }
+
   50% {
     text-shadow: 0 0 15px var(--primary-color), 0 0 20px var(--primary-color);
   }
@@ -162,16 +165,19 @@
   0% {
     background-position: 0% 0%;
   }
+
   100% {
     background-position: 100% 100%;
   }
 }
 
 @keyframes highlightBlink {
+
   0%,
   100% {
     opacity: 1;
   }
+
   50% {
     opacity: 0.5;
   }
@@ -181,16 +187,19 @@
   0% {
     transform: translateY(0);
   }
+
   100% {
     transform: translateY(100%);
   }
 }
 
 @keyframes blinkCursor {
+
   from,
   to {
     border-color: transparent;
   }
+
   50% {
     border-color: var(--primary-color);
   }
@@ -200,6 +209,7 @@
   0% {
     background-position: 0 0;
   }
+
   100% {
     background-position: 0 40px;
   }
@@ -248,13 +258,11 @@
   height: 100%;
   opacity: 0.1;
   z-index: 0;
-  background: repeating-linear-gradient(
-    180deg,
-    transparent,
-    transparent 20px,
-    var(--primary-dim) 20px,
-    var(--primary-dim) 40px
-  );
+  background: repeating-linear-gradient(180deg,
+      transparent,
+      transparent 20px,
+      var(--primary-dim) 20px,
+      var(--primary-dim) 40px);
   background-size: 100% 40px;
   animation: matrixRain 2s linear infinite;
 }
@@ -315,24 +323,31 @@
 .tos-pp-panel:nth-child(1) {
   animation-delay: 0.1s;
 }
+
 .tos-pp-panel:nth-child(2) {
   animation-delay: 0.2s;
 }
+
 .tos-pp-panel:nth-child(3) {
   animation-delay: 0.3s;
 }
+
 .tos-pp-panel:nth-child(4) {
   animation-delay: 0.4s;
 }
+
 .tos-pp-panel:nth-child(5) {
   animation-delay: 0.5s;
 }
+
 .tos-pp-panel:nth-child(6) {
   animation-delay: 0.6s;
 }
+
 .tos-pp-panel:nth-child(7) {
   animation-delay: 0.7s;
 }
+
 .tos-pp-panel:nth-child(8) {
   animation-delay: 0.8s;
 }

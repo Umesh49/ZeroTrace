@@ -21,7 +21,7 @@ import { GiBiohazard, GiFirewall } from "react-icons/gi";
 import { SiHackaday } from "react-icons/si";
 import { TbBinaryTree } from "react-icons/tb";
 import MatrixBackground from "../common/MatrixBackground";
-import CyberSpinner from "../common/CyberSpinner/CyberSpinner";
+import { SkeletonPage } from "../common/Skeleton/Skeleton.jsx";
 import "./Home.css";
 
 const Home = () => {
@@ -86,6 +86,19 @@ const Home = () => {
     };
   }, [loading]);
 
+  // Refs to hold latest values for the interval callback
+  const statsRef = useRef(stats);
+  const threatDataRef = useRef(threatData);
+  const loadingRef = useRef(loading);
+
+  // Keep refs in sync with state
+  useEffect(() => {
+    statsRef.current = stats;
+    threatDataRef.current = threatData;
+    loadingRef.current = loading;
+  }, [stats, threatData, loading]);
+
+  // Initial data fetch 
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -118,31 +131,34 @@ const Home = () => {
     };
 
     fetchData();
+  }, []);
 
+  // Separate effect for the update interval
+  useEffect(() => {
     const threatUpdateInterval = setInterval(() => {
-      if (!loading) {
+      if (!loadingRef.current && statsRef.current && threatDataRef.current) {
         const levels = ["Low", "Moderate", "Elevated", "High", "Severe"];
         const newLevel = levels[Math.floor(Math.random() * levels.length)];
         setThreatLevel(newLevel);
 
-        if (stats && threatData) {
-          const newThreatData = { ...threatData };
-          const keys = Object.keys(newThreatData);
-          const randomKey = keys[Math.floor(Math.random() * (keys.length - 1))];
+        const newThreatData = { ...threatDataRef.current };
+        const keys = Object.keys(newThreatData).filter(k => k !== 'lastUpdated');
+        const randomKey = keys[Math.floor(Math.random() * keys.length)];
+        if (typeof newThreatData[randomKey] === 'number') {
           newThreatData[randomKey] = Math.max(
             0,
             newThreatData[randomKey] + Math.floor(Math.random() * 7) - 3
           );
-          newThreatData.lastUpdated = new Date().toLocaleTimeString();
-          setThreatData(newThreatData);
         }
+        newThreatData.lastUpdated = new Date().toLocaleTimeString();
+        setThreatData(newThreatData);
       }
     }, 15000);
 
     return () => {
       clearInterval(threatUpdateInterval);
     };
-  }, [loading, stats, threatData]);
+  }, []); // Only set up interval once
 
   const services = [
     {
@@ -405,11 +421,7 @@ const Home = () => {
   ];
 
   if (loading) {
-    return (
-      <div className="home-loading-container">
-        <CyberSpinner />
-      </div>
-    );
+    return <SkeletonPage type="default" />;
   }
 
   return (
@@ -422,9 +434,8 @@ const Home = () => {
 
       <section
         id="home-hero-section"
-        className={`home-hero-section ${
-          isVisible["home-hero-section"] ? "visible" : ""
-        }`}
+        className={`home-hero-section ${isVisible["home-hero-section"] ? "visible" : ""
+          }`}
       >
         <div className="home-hero-content">
           <div className="home-logo-container">
@@ -432,7 +443,7 @@ const Home = () => {
             <div className="home-logo-glow"></div>
           </div>
           <h1
-            className="home-hero-title home-neon-text home-glitch"
+            className="home-hero-title home-neon-text home-glitch page-title"
             data-text="ZeroTrace"
           >
             ZeroTrace
@@ -469,9 +480,8 @@ const Home = () => {
 
       <section
         id="home-threat-dashboard"
-        className={`home-threat-dashboard ${
-          isVisible["home-threat-dashboard"] ? "visible" : ""
-        }`}
+        className={`home-threat-dashboard ${isVisible["home-threat-dashboard"] ? "visible" : ""
+          }`}
       >
         <div className="home-dashboard-header">
           <div className="home-dashboard-title-container">
@@ -583,9 +593,8 @@ const Home = () => {
 
       <section
         id="home-services-section"
-        className={`home-services-section ${
-          isVisible["home-services-section"] ? "visible" : ""
-        }`}
+        className={`home-services-section ${isVisible["home-services-section"] ? "visible" : ""
+          }`}
       >
         <div className="home-section-header">
           <h2 className="home-section-title">Cyber Security Toolkit</h2>
@@ -617,9 +626,8 @@ const Home = () => {
       </section>
       <section
         id="home-laws-section"
-        className={`home-section home-section-alt ${
-          isVisible["home-laws-section"] ? "visible" : ""
-        }`}
+        className={`home-section home-section-alt ${isVisible["home-laws-section"] ? "visible" : ""
+          }`}
       >
         <div className="home-section-container">
           <div className="home-section-header">
@@ -661,9 +669,8 @@ const Home = () => {
       </section>
       <section
         id="home-chatbot-section"
-        className={`home-section home-section-alt ${
-          isVisible["home-chatbot-section"] ? "visible" : ""
-        }`}
+        className={`home-section home-section-alt ${isVisible["home-chatbot-section"] ? "visible" : ""
+          }`}
       >
         <div className="home-section-container">
           <div className="home-section-header">
@@ -714,9 +721,8 @@ const Home = () => {
       </section>
       <section
         id="home-news-section"
-        className={`home-section ${
-          isVisible["home-news-section"] ? "visible" : ""
-        }`}
+        className={`home-section ${isVisible["home-news-section"] ? "visible" : ""
+          }`}
       >
         <div className="home-section-container">
           <div className="home-section-header">

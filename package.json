@@ -1,7 +1,19 @@
 {
-  "name": "zerobot",
-  "version": "0.2.0",
+  "name": "zerotrace",
+  "version": "1.0.0",
+  "description": "A comprehensive cybersecurity awareness and education platform - Academic Project",
   "private": true,
+  "keywords": [
+    "cybersecurity",
+    "security-tools",
+    "cyber-awareness",
+    "indian-it-laws",
+    "react",
+    "vite",
+    "academic-project"
+  ],
+  "author": "Umesh",
+  "license": "MIT",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -23,7 +35,6 @@
     "react-icons": "^4.10.1",
     "react-markdown": "^10.1.0",
     "react-router-dom": "^6.30.0",
-    "react-toastify": "^11.0.5",
     "zxcvbn": "^4.4.2"
   },
   "devDependencies": {
@@ -39,6 +50,7 @@
     "globals": "^16.1.0",
     "lru-cache": "^11.1.0",
     "rimraf": "^4.4.1",
-    "vite": "^6.2.6"
+    "vite": "^6.2.6",
+    "vite-plugin-pwa": "^1.2.0"
   }
 }

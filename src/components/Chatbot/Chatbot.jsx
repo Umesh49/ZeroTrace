@@ -1,8 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import "./Chatbot.css";
 import { generateRuleBasedResponse } from "./cybersecurityData";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { useModal } from "../../context/ModalContext";
 import ReactMarkdown from "react-markdown";
 
 const CybersecurityChatbot = () => {
@@ -19,6 +18,7 @@ const CybersecurityChatbot = () => {
   const [isUsingAI, setIsUsingAI] = useState(false);
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
+  const { showError, showInfo, showSuccess } = useModal();
 
   useEffect(() => {
     if (inputRef.current) {
@@ -246,22 +246,16 @@ const CybersecurityChatbot = () => {
           if (response) {
             return enhanceWithFormatting(response);
           }
-          toast.error(
-            `Failed to get response from ${config.provider.toUpperCase()} API. Trying next API...`,
-            {
-              position: "top-right",
-              autoClose: 3000,
-            }
+          showError(
+            "API Connection Failed",
+            `Failed to get response from ${config.provider.toUpperCase()} API. Trying next API...`
           );
         }
       }
 
-      toast.error(
-        "Unable to connect to any AI service. Using rule-based responses instead.",
-        {
-          position: "top-right",
-          autoClose: 3000,
-        }
+      showError(
+        "AI Service Unavailable",
+        "Unable to connect to any AI service. Using rule-based responses instead."
       );
       response = generateRuleBasedResponse(input);
     } else {
@@ -306,29 +300,7 @@ const CybersecurityChatbot = () => {
       };
       setMessages((prev) => [...prev, errorMessage]);
       setIsTyping(false);
-      toast.error("System error occurred. Please try again.", {
-        position: "top-right",
-        autoClose: 3000,
-      });
-    }
-  };
-
-  const showToast = (title, message, type = "info") => {
-    const options = {
-      position: "top-right",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-    };
-
-    if (type === "error") {
-      toast.error(`${title}: ${message}`, options);
-    } else if (type === "success") {
-      toast.success(`${title}: ${message}`, options);
-    } else {
-      toast.info(`${title}: ${message}`, options);
+      showError("System Error", "Communication failure. Please try again.");
     }
   };
 
@@ -339,22 +311,19 @@ const CybersecurityChatbot = () => {
       import.meta.env.VITE_XAI_API_KEY;
 
     if (!hasAnyApiKey) {
-      showToast(
+      showError(
         "API Key Missing",
-        "Please add at least one API key to the environment variables.",
-        "error"
+        "Please add at least one API key to the environment variables."
       );
       return;
     }
 
     setIsUsingAI(!isUsingAI);
-    showToast(
-      isUsingAI ? "AI Mode Deactivated" : "AI Mode Activated",
-      isUsingAI
-        ? "Using rule-based responses only."
-        : "Now using AI services for responses.",
-      isUsingAI ? "info" : "success"
-    );
+    if (isUsingAI) {
+      showInfo("AI Mode Deactivated", "Using rule-based responses only.");
+    } else {
+      showSuccess("AI Mode Activated", "Now using AI services for responses.");
+    }
   };
 
   return (
@@ -374,9 +343,8 @@ const CybersecurityChatbot = () => {
           {messages.map((message) => (
             <div
               key={message.id}
-              className={`chatbot-message ${
-                message.type === "user" ? "chatbot-user" : "chatbot-bot"
-              }`}
+              className={`chatbot-message ${message.type === "user" ? "chatbot-user" : "chatbot-bot"
+                }`}
             >
               <div className="chatbot-message-icon">
                 {message.type === "user" ? "🧑‍💻" : "🤖"}
@@ -445,7 +413,7 @@ const CybersecurityChatbot = () => {
           </div>
         </div>
       </div>
-      <ToastContainer />
+
     </div>
   );
 };

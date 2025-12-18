@@ -65,7 +65,7 @@ const DnsLeakTester = () => {
     <div className="security-tools">
       <div className="sec-tool-container">
         <div className="sec-tool-header">
-          <h1 className="sec-tool-title">DNS Leak Tester</h1>
+          <h1 className="sec-tool-title page-title">DNS Leak Tester</h1>
           <p className="sec-tool-subtitle">Check if your DNS requests are leaking outside your VPN</p>
         </div>
         <div className="sec-tool-card">

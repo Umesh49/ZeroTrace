@@ -17,7 +17,8 @@ import {
   FaChevronRight,
 } from "react-icons/fa";
 import { tutorialData } from "./youtube.js";
-import CyberSpinner from "../common/CyberSpinner/CyberSpinner";
+import { SkeletonPage } from "../common/Skeleton/Skeleton.jsx";
+import { useModal } from "../../context/ModalContext";
 import "./Tutorials.css";
 
 const Pagination = ({ currentPage, totalPages, onPageChange }) => {
@@ -83,9 +84,8 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
         ) : (
           <button
             key={i} // Changed from key={p} to key={i} to avoid duplicate keys
-            className={`tutorial-pagination-btn ${
-              currentPage === p ? "active" : ""
-            }`}
+            className={`tutorial-pagination-btn ${currentPage === p ? "active" : ""
+              }`}
             onClick={() => onPageChange(p)}
             aria-current={currentPage === p ? "page" : undefined}
           >
@@ -111,6 +111,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
 };
 
 const Tutorials = () => {
+  const { showInfo } = useModal();
   const getCategoryIcon = useCallback((cat) => {
     switch (cat) {
       case "security":
@@ -250,12 +251,12 @@ const Tutorials = () => {
     window.open(url, "_blank", "noopener,noreferrer");
   }, []);
 
-  if (loading) return <CyberSpinner />;
+  if (loading) return <SkeletonPage type="grid" />;
 
   return (
     <div className="tutorial-container">
       <header className="tutorial-page-header">
-        <h1 className="tutorial-page-title">
+        <h1 className="tutorial-page-title page-title">
           <span className="tutorial-title-prefix">&gt;_</span> Security
           Tutorials
         </h1>
@@ -296,9 +297,8 @@ const Tutorials = () => {
             >
               <FaFilter /> <span>Filter</span>
               <FaAngleDown
-                className={`tutorial-filter-arrow ${
-                  isFilterOpen ? "open" : ""
-                }`}
+                className={`tutorial-filter-arrow ${isFilterOpen ? "open" : ""
+                  }`}
               />
             </button>
 
@@ -329,9 +329,8 @@ const Tutorials = () => {
                 {availableCategories.map((cat) => (
                   <button
                     key={cat.id}
-                    className={`tutorial-category-pill ${
-                      selectedCategory === cat.id ? "active" : ""
-                    }`}
+                    className={`tutorial-category-pill ${selectedCategory === cat.id ? "active" : ""
+                      }`}
                     onClick={() => {
                       setSelectedCategory(cat.id);
                       setIsFilterOpen(false);
@@ -355,8 +354,7 @@ const Tutorials = () => {
             Showing {filteredTutorials.length}{" "}
             {filteredTutorials.length === 1 ? "result" : "results"}
             {selectedCategory !== "all" &&
-              ` in ${
-                availableCategories.find((c) => c.id === selectedCategory)?.name
+              ` in ${availableCategories.find((c) => c.id === selectedCategory)?.name
               }`}
             {searchQuery && ` for "${searchQuery}"`}
           </span>
@@ -391,6 +389,7 @@ const Tutorials = () => {
             onClick={() => {
               setSearchQuery("");
               setSelectedCategory("all");
+              showInfo("Filters Reset", "All filters have been cleared.");
             }}
           >
             Reset Filters

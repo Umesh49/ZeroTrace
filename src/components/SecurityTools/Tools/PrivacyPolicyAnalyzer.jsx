@@ -48,7 +48,7 @@ const PrivacyPolicyAnalyzer = () => {
     <div className="security-tools">
       <div className="sec-tool-container">
         <div className="sec-tool-header">
-          <h1 className="sec-tool-title">Privacy Policy Analyzer</h1>
+          <h1 className="sec-tool-title page-title">Privacy Policy Analyzer</h1>
           <p className="sec-tool-subtitle">Check how websites handle your personal data</p>
         </div>
         <div className="sec-tool-card">

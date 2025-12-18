@@ -44,7 +44,7 @@ const SafeBrowsingCheck = () => {
     <div className="security-tools">
       <div className="sec-tool-container">
         <div className="sec-tool-header">
-          <h1 className="sec-tool-title">Safe Browsing Check</h1>
+          <h1 className="sec-tool-title page-title">Safe Browsing Check</h1>
           <p className="sec-tool-subtitle">Check if a URL is safe to visit</p>
         </div>
         <div className="sec-tool-card">

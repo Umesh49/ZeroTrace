@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import './ThreatStats.css';
-import CyberSpinner from '../common/CyberSpinner/CyberSpinner';
+import { SkeletonPage } from '../common/Skeleton/Skeleton.jsx';
+import { useModal } from '../../context/ModalContext';
 
 const threatCategories = [
   'APT (Advanced Persistent Threat)',
@@ -143,9 +144,9 @@ const fetchCountryThreatStats = () => {
   return new Promise((resolve) => {
     setTimeout(() => {
       const countries = [
-        'United States', 'China', 'Russia', 'Brazil', 'India', 'Germany', 
-        'United Kingdom', 'Japan', 'France', 'Canada', 'South Korea', 'Australia', 
-        'Italy', 'Spain', 'Netherlands', 'Turkey', 'Indonesia', 'Mexico', 
+        'United States', 'China', 'Russia', 'Brazil', 'India', 'Germany',
+        'United Kingdom', 'Japan', 'France', 'Canada', 'South Korea', 'Australia',
+        'Italy', 'Spain', 'Netherlands', 'Turkey', 'Indonesia', 'Mexico',
         'Vietnam', 'Saudi Arabia', 'Singapore', 'Israel', 'Ukraine', 'North Korea', 'Iran'
       ];
 
@@ -201,7 +202,8 @@ const ThreatStats = () => {
   const [error, setError] = useState(null);
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [refreshTime, setRefreshTime] = useState(new Date());
-  
+  const { showError, showInfo } = useModal();
+
   const fetchThreats = async () => {
     setLoading(true);
     try {
@@ -211,55 +213,57 @@ const ThreatStats = () => {
       setRefreshTime(new Date());
       setLoading(false);
     } catch (err) {
-      setError('Failed to load threat data. Network connection issue detected.');
+      const msg = 'Failed to load threat data. Network connection issue detected.';
+      setError(msg);
+      showError('Connection Failed', msg);
       setLoading(false);
     }
   };
 
   const calculateStats = (data) => {
     const active = data.reduce((sum, c) => sum + c.threatCount, 0);
-    
+
     const allCategories = [];
     data.forEach(country => {
       const cats = country.categories.split(', ');
       cats.forEach(cat => allCategories.push(cat));
     });
-    
+
     const categoryCount = {};
     allCategories.forEach(cat => {
       categoryCount[cat] = (categoryCount[cat] || 0) + 1;
     });
-    
+
     let topCategory = 'Unknown';
     let maxCount = 0;
-    
+
     Object.entries(categoryCount).forEach(([cat, count]) => {
       if (count > maxCount) {
         maxCount = count;
         topCategory = cat;
       }
     });
-    
+
     const todayMultiplier = 0.8 + (Math.random() * 0.4);
     const today = Math.floor(active * todayMultiplier);
-    
+
     return { active, topCategory, today };
   };
 
   useEffect(() => {
     fetchThreats();
-    
+
     const intervalId = setInterval(() => {
       fetchThreats();
     }, 60000);
-    
+
     return () => clearInterval(intervalId);
   }, []);
 
   const formatTime = (date) => {
     return date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
   };
-  
+
   const formatDate = (date) => {
     return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
   };
@@ -276,17 +280,17 @@ const ThreatStats = () => {
 
   const DetailView = ({ country }) => {
     if (!country) return null;
-    
+
     const countryData = countries.find(c => c.country === country);
     if (!countryData) return null;
-    
+
     return (
       <div className="threat-map-detail-view">
         <div className="threat-map-detail-header">
           <h3>{countryData.country} Threat Details</h3>
           <button className="threat-map-close-button" onClick={() => setSelectedCountry(null)}>×</button>
         </div>
-        
+
         <div className="threat-map-detail-stats">
           <div className="threat-map-detail-stat">
             <span className="threat-map-detail-label">Active Threats:</span>
@@ -298,9 +302,8 @@ const ThreatStats = () => {
           </div>
           <div className="threat-map-detail-stat">
             <span className="threat-map-detail-label">Average Confidence:</span>
-            <span className={`threat-map-detail-value threat-map-confidence-value ${
-              countryData.avgConfidence > 75 ? 'high' : countryData.avgConfidence > 50 ? 'medium' : 'low'
-            }`}>
+            <span className={`threat-map-detail-value threat-map-confidence-value ${countryData.avgConfidence > 75 ? 'high' : countryData.avgConfidence > 50 ? 'medium' : 'low'
+              }`}>
               {countryData.avgConfidence}%
             </span>
           </div>
@@ -309,7 +312,7 @@ const ThreatStats = () => {
             <span className="threat-map-detail-value">{formatTime(countryData.lastUpdated)}</span>
           </div>
         </div>
-        
+
         <div className="threat-map-severity-distribution">
           <h4>Threat Severity Distribution</h4>
           <div className="threat-map-severity-bars">
@@ -338,7 +341,7 @@ const ThreatStats = () => {
             </div>
           </div>
         </div>
-        
+
         <div className="threat-map-recent-activity">
           <h4>Recent Activity</h4>
           <table className="threat-map-activity-table">
@@ -362,25 +365,23 @@ const ThreatStats = () => {
     );
   };
 
-  if (loading) return (
-    <div className="threat-map-loading-container">
-      <CyberSpinner />
-      <p className="threat-map-loading-text">Accessing secure threat database...</p>
-    </div>
-  );
+  if (loading) return <SkeletonPage type="default" />;
 
   if (error) return (
     <div className="threat-map-error-container">
       <div className="threat-map-error-icon">!</div>
       <p>{error}</p>
-      <button onClick={fetchThreats} className="threat-map-retry-button">Retry Connection</button>
+      <button onClick={() => {
+        showInfo("Retrying", "Attempting to reconnect...");
+        fetchThreats();
+      }} className="threat-map-retry-button">Retry Connection</button>
     </div>
   );
 
   return (
     <div className="threat-map-grid-wrapper">
       <div className="threat-map-grid-header">
-        <h1 className="threat-map-grid-title">Global Threat Map</h1>
+        <h1 className="threat-map-grid-title page-title">Global Threat Map</h1>
         <p className="threat-map-grid-subtitle">Real-time threat monitoring and analysis</p>
       </div>
 
@@ -423,9 +424,8 @@ const ThreatStats = () => {
                 </td>
                 <td className="threat-map-hide-tablet threat-map-category-cell">{c.categories}</td>
                 <td className="threat-map-hide-mobile threat-map-confidence-cell">
-                  <span className={`threat-map-confidence-value ${
-                    c.avgConfidence > 75 ? 'high' : c.avgConfidence > 50 ? 'medium' : 'low'
-                  }`}>
+                  <span className={`threat-map-confidence-value ${c.avgConfidence > 75 ? 'high' : c.avgConfidence > 50 ? 'medium' : 'low'
+                    }`}>
                     {c.avgConfidence}%
                   </span>
                 </td>

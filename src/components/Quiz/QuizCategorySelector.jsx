@@ -63,7 +63,7 @@ function QuizCategorySelector() {
         <div className="quiz-savdhan-container">
           <div className="quiz-savdhan-card">
             <div className="quiz-savdhan-header">
-              <h1 className="quiz-savdhan-title">{hackerEffect}</h1>
+              <h1 className="quiz-savdhan-title page-title">{hackerEffect}</h1>
               <div className="quiz-savdhan-divider"></div>
               <p className="quiz-savdhan-subtitle">SELECT SECURITY PROTOCOL // INITIALIZE DEFENSE SYSTEMS</p>
             </div>

@@ -225,9 +225,8 @@ const FAQ = () => {
           {faqs.map((faq, index) => (
             <div
               key={index}
-              className={`contact-enhanced-faq-card ${
-                expandedFaq === index ? "contact-faq-expanded" : ""
-              }`}
+              className={`contact-enhanced-faq-card ${expandedFaq === index ? "contact-faq-expanded" : ""
+                }`}
               style={{ animationDelay: `${index * 0.2}s` }}
               onClick={() =>
                 setExpandedFaq(expandedFaq === index ? null : index)
@@ -440,9 +439,8 @@ const Contact = () => {
       {/* Floating navigation controls */}
       <div className="contact-floating-nav">
         <div
-          className={`contact-nav-item ${
-            activeSection === "hero" ? "active" : ""
-          }`}
+          className={`contact-nav-item ${activeSection === "hero" ? "active" : ""
+            }`}
           onClick={() =>
             document
               .getElementById("hero")
@@ -453,9 +451,8 @@ const Contact = () => {
           <span className="contact-tooltip">Home</span>
         </div>
         <div
-          className={`contact-nav-item ${
-            activeSection === "emergency" ? "active" : ""
-          }`}
+          className={`contact-nav-item ${activeSection === "emergency" ? "active" : ""
+            }`}
           onClick={() =>
             document
               .getElementById("emergency")
@@ -466,9 +463,8 @@ const Contact = () => {
           <span className="contact-tooltip">Emergency</span>
         </div>
         <div
-          className={`contact-nav-item ${
-            activeSection === "channels" ? "active" : ""
-          }`}
+          className={`contact-nav-item ${activeSection === "channels" ? "active" : ""
+            }`}
           onClick={() =>
             document
               .getElementById("channels")
@@ -479,9 +475,8 @@ const Contact = () => {
           <span className="contact-tooltip">Channels</span>
         </div>
         <div
-          className={`contact-nav-item ${
-            activeSection === "units" ? "active" : ""
-          }`}
+          className={`contact-nav-item ${activeSection === "units" ? "active" : ""
+            }`}
           onClick={() =>
             document
               .getElementById("units")
@@ -492,9 +487,8 @@ const Contact = () => {
           <span className="contact-tooltip">Units</span>
         </div>
         <div
-          className={`contact-nav-item ${
-            activeSection === "resources" ? "active" : ""
-          }`}
+          className={`contact-nav-item ${activeSection === "resources" ? "active" : ""
+            }`}
           onClick={() =>
             document
               .getElementById("resources")
@@ -505,9 +499,8 @@ const Contact = () => {
           <span className="contact-tooltip">Resources</span>
         </div>
         <div
-          className={`contact-nav-item ${
-            activeSection === "faq" ? "active" : ""
-          }`}
+          className={`contact-nav-item ${activeSection === "faq" ? "active" : ""
+            }`}
           onClick={() =>
             document
               .getElementById("faq")
@@ -526,7 +519,7 @@ const Contact = () => {
             <div className="contact-badge contact-badge-animated">
               Official Security Resource Center
             </div>
-            <h1 className="contact-animated-title">
+            <h1 className="contact-animated-title page-title">
               Cybercrime Help & Support Centre
             </h1>
             <p className="contact-hero-description">

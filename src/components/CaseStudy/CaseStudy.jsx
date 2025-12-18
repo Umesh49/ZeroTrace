@@ -38,7 +38,7 @@ const CaseStudies = memo(() => {
   return (
     <div className="case-study-container">
       <div className="case-study-header">
-        <h2>CYBERCRIME CASE STUDIES</h2>
+        <h2 className="page-title">CYBERCRIME CASE STUDIES</h2>
         <p>Analysis of Major Digital Security Incidents (2003-2025)</p>
       </div>
 

@@ -457,9 +457,8 @@ const PersonalInfoForm = ({ userData, onSubmit }) => {
         {[1, 2, 3, 4, 5, 6].map((stepNum) => (
           <div
             key={stepNum}
-            className={`com-form-progress-step ${
-              stepNum === 1 ? "active" : ""
-            } ${stepNum < 1 ? "completed" : ""}`}
+            className={`com-form-progress-step ${stepNum === 1 ? "active" : ""
+              } ${stepNum < 1 ? "completed" : ""}`}
           >
             <div className="com-form-step-number">{stepNum}</div>
             <div className="com-form-step-label">
@@ -940,9 +939,8 @@ const ComplaintDetailsForm = ({ userData, onSubmit, onPrevStep }) => {
         {[1, 2, 3, 4, 5, 6].map((stepNum) => (
           <div
             key={stepNum}
-            className={`com-form-progress-step ${
-              stepNum === 2 ? "active" : ""
-            } ${stepNum < 2 ? "completed" : ""}`}
+            className={`com-form-progress-step ${stepNum === 2 ? "active" : ""
+              } ${stepNum < 2 ? "completed" : ""}`}
           >
             <div className="com-form-step-number">{stepNum}</div>
             <div className="com-form-step-label">
@@ -1342,9 +1340,8 @@ const SuspectInfoForm = ({ userData, onSubmit, onPrevStep }) => {
         {[1, 2, 3, 4, 5, 6].map((stepNum) => (
           <div
             key={stepNum}
-            className={`com-form-progress-step ${
-              stepNum === 3 ? "active" : ""
-            } ${stepNum < 3 ? "completed" : ""}`}
+            className={`com-form-progress-step ${stepNum === 3 ? "active" : ""
+              } ${stepNum < 3 ? "completed" : ""}`}
           >
             <div className="com-form-step-number">{stepNum}</div>
             <div className="com-form-step-label">
@@ -1595,9 +1592,8 @@ const IdentityVerificationForm = ({ userData, onSubmit, onPrevStep }) => {
         {[1, 2, 3, 4, 5, 6].map((stepNum) => (
           <div
             key={stepNum}
-            className={`com-form-progress-step ${
-              stepNum === 4 ? "active" : ""
-            } ${stepNum < 4 ? "completed" : ""}`}
+            className={`com-form-progress-step ${stepNum === 4 ? "active" : ""
+              } ${stepNum < 4 ? "completed" : ""}`}
           >
             <div className="com-form-step-number">{stepNum}</div>
             <div className="com-form-step-label">
@@ -1787,9 +1783,8 @@ const PreviewForm = ({
         {[1, 2, 3, 4, 5, 6].map((stepNum) => (
           <div
             key={stepNum}
-            className={`com-form-progress-step ${
-              stepNum === 5 ? "active" : ""
-            } ${stepNum < 5 ? "completed" : ""}`}
+            className={`com-form-progress-step ${stepNum === 5 ? "active" : ""
+              } ${stepNum < 5 ? "completed" : ""}`}
           >
             <div className="com-form-step-number">{stepNum}</div>
             <div className="com-form-step-label">
@@ -2051,9 +2046,8 @@ const SuccessMessage = ({ complaintId }) => {
         {[1, 2, 3, 4, 5, 6].map((stepNum) => (
           <div
             key={stepNum}
-            className={`com-form-progress-step ${
-              stepNum === 6 ? "active" : "completed"
-            }`}
+            className={`com-form-progress-step ${stepNum === 6 ? "active" : "completed"
+              }`}
           >
             <div className="com-form-step-number">{stepNum}</div>
             <div className="com-form-step-label">
@@ -2142,7 +2136,7 @@ const ComplaintForm = () => {
   return (
     <div className="com-form-container">
       <header className="com-form-page-header">
-        <h1>
+        <h1 className="page-title">
           <Terminal size={28} className="com-header-icon" />
           <span>National Cybercrime Reporting (Test Portal)</span>
         </h1>

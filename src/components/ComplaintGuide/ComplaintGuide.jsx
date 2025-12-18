@@ -26,7 +26,7 @@ import {
   portalSteps,
   processSteps,
 } from "./tabsData.jsx";
-import CyberSpinner from "../common/CyberSpinner/CyberSpinner.jsx";
+import { SkeletonPage } from "../common/Skeleton/Skeleton.jsx";
 
 // Error Boundary Component
 class ErrorBoundary extends Component {
@@ -81,9 +81,8 @@ const Accordion = memo(({ items }) => {
       {items?.map((item, index) => (
         <div key={item.id} className="guide-accordion-item">
           <div
-            className={`guide-accordion-header ${
-              expandedSection === item.id ? "guide-expanded" : ""
-            }`}
+            className={`guide-accordion-header ${expandedSection === item.id ? "guide-expanded" : ""
+              }`}
             onClick={() => toggleSection(item.id)}
           >
             <div className="guide-accordion-title">
@@ -100,9 +99,8 @@ const Accordion = memo(({ items }) => {
             </div>
           </div>
           <div
-            className={`guide-accordion-content ${
-              expandedSection === item.id ? "guide-expanded" : ""
-            }`}
+            className={`guide-accordion-content ${expandedSection === item.id ? "guide-expanded" : ""
+              }`}
           >
             {item.content}
           </div>
@@ -169,9 +167,8 @@ const TabNavigation = memo(({ activeTab, setActiveTab }) => {
       {tabs.map((tab) => (
         <button
           key={tab.id}
-          className={`guide-tab-button ${
-            activeTab === tab.id ? "guide-active" : ""
-          }`}
+          className={`guide-tab-button ${activeTab === tab.id ? "guide-active" : ""
+            }`}
           onClick={() => setActiveTab(tab.id)}
         >
           <span className="guide-tab-icon">{tab.icon}</span>
@@ -459,18 +456,14 @@ const ComplaintGuide = () => {
   };
 
   if (isLoading) {
-    return (
-      <div className="guide-loading-container">
-        <CyberSpinner />
-      </div>
-    );
+    return <SkeletonPage type="default" />;
   }
 
   return (
     <ErrorBoundary>
       <div className="guide-container">
         <div className="guide-header">
-          <h1>
+          <h1 className="page-title">
             <Terminal size={28} className="guide-header-icon" />
             <span>Cyber Crime Complaint Guide</span>
           </h1>

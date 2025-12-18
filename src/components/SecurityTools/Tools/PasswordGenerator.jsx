@@ -27,9 +27,12 @@ const PasswordGenerator = () => {
       chars = lowerChars;
     }
 
+    const randomValues = new Uint32Array(length);
+    crypto.getRandomValues(randomValues);
+
     let newPassword = "";
     for (let i = 0; i < length; i++) {
-      const randomIndex = Math.floor(Math.random() * chars.length);
+      const randomIndex = randomValues[i] % chars.length;
       newPassword += chars.charAt(randomIndex);
     }
 
@@ -53,7 +56,7 @@ const PasswordGenerator = () => {
     <div className="security-tools">
       <div className="sec-tool-container">
         <div className="sec-tool-header">
-          <h1 className="sec-tool-title">Password Generator</h1>
+          <h1 className="sec-tool-title page-title">Password Generator</h1>
           <p className="sec-tool-subtitle">Create strong, random passwords</p>
         </div>
         <div className="sec-tool-card">

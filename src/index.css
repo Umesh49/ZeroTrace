@@ -1,0 +1,298 @@
+@import url('https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&display=swap');
+
+:root {
+    /* Privacy/Terms "Gold Standard" Palette */
+    --primary-color: #00ffaa;
+    --primary-dim: rgba(0, 255, 170, 0.7);
+    --primary-glow: rgba(0, 255, 170, 0.2);
+
+    --secondary-color: #030812;
+    --accent-color: #ff3e00;
+
+    --bg-dark: #080e17;
+    --bg-medium: #0a1020;
+    --bg-light: #152030;
+
+    --text-primary: #e0e0e0;
+    --text-secondary: #b0b0b0;
+
+    --border-color: #2a2a2a;
+
+    --neon-glow: 0 0 10px rgba(0, 255, 170, 0.5), 0 0 20px rgba(0, 255, 170, 0.2);
+    --neon-glow-strong: 0 0 10px rgba(0, 255, 170, 0.7), 0 0 25px rgba(0, 255, 170, 0.3);
+
+    --terminal-green: #00ffaa;
+    --error-red: #ff3e00;
+
+    /* Status Colors */
+    --danger-color: #ff5555;
+    --danger-dim: rgba(255, 85, 85, 0.3);
+    --danger-glow: rgba(255, 85, 85, 0.2);
+
+    --warning-color: #ffb03e;
+    --warning-dim: rgba(255, 176, 62, 0.3);
+    --warning-glow: rgba(255, 176, 62, 0.2);
+
+    --info-color: #00c3ff;
+    --info-dim: rgba(0, 195, 255, 0.3);
+    --info-glow: rgba(0, 195, 255, 0.2);
+
+    --success-color: #00ff6a;
+    --success-dim: rgba(0, 255, 106, 0.3);
+    --success-glow: rgba(0, 255, 106, 0.2);
+
+    --purple-color: #8800ff;
+    --purple-dim: rgba(136, 0, 255, 0.3);
+    --purple-glow: rgba(136, 0, 255, 0.2);
+
+    --cyberdeck-border: 1px solid var(--primary-dim);
+
+    --font-mono: "Courier New", monospace;
+    --font-sans: "Rajdhani", "Orbitron", sans-serif;
+    --font-heading: "Orbitron", sans-serif;
+}
+
+body {
+    margin: 0;
+    font-family: var(--font-sans);
+    background-color: var(--secondary-color);
+    color: var(--text-primary);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    line-height: 1.6;
+}
+
+/* Global anchor reset */
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+/* ========================================
+   Global Typography - Consistent Headings
+   ======================================== */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: var(--font-heading);
+    color: var(--text-primary);
+    margin: 0 0 1rem;
+    line-height: 1.2;
+    font-weight: 600;
+}
+
+h1 {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    text-shadow: 0 0 5px var(--primary-glow);
+    letter-spacing: 1.5px;
+}
+
+h2 {
+    font-size: 1.75rem;
+    color: var(--primary-color);
+    text-shadow: 0 0 3px var(--primary-glow);
+    letter-spacing: 0.5px;
+}
+
+h3 {
+    font-size: 1.5rem;
+    color: var(--text-primary);
+    letter-spacing: 0.5px;
+}
+
+h4 {
+    font-size: 1.25rem;
+    color: var(--text-primary);
+}
+
+h5 {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+}
+
+h6 {
+    font-size: 1rem;
+    color: var(--text-secondary);
+}
+
+p {
+    font-family: var(--font-sans);
+    color: var(--text-primary);
+    line-height: 1.7;
+    margin: 0 0 1rem;
+}
+
+/* Section styling utilities */
+.section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.section-title {
+    font-family: var(--font-heading);
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    text-shadow: var(--neon-glow);
+    margin-bottom: 1rem;
+    letter-spacing: 1px;
+}
+
+.section-subtitle {
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    max-width: 700px;
+    margin: 0 auto 1.5rem;
+}
+
+.section-divider {
+    width: 150px;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+    margin: 0 auto;
+}
+
+/* ========================================
+   Standardized Page Headers
+   Use these classes for consistent page titles
+   ======================================== */
+
+.page-header {
+    text-align: center;
+    padding: 2.5rem 1.5rem;
+    margin-bottom: 2rem;
+    background: linear-gradient(to bottom, var(--secondary-color), var(--bg-dark));
+    border-bottom: 1px solid var(--primary-glow);
+    position: relative;
+}
+
+.page-header::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+}
+
+/* Main page title - STANDARDIZED at 2.25rem */
+.page-title {
+    font-family: var(--font-heading) !important;
+    font-size: 2.25rem !important;
+    font-weight: 600 !important;
+    color: var(--primary-color) !important;
+    text-shadow: 0 0 4px var(--primary-glow) !important;
+    letter-spacing: 1.5px !important;
+    margin: 0 0 1rem !important;
+    line-height: 1.3 !important;
+}
+
+/* Page subtitle - STANDARDIZED at 1.15rem */
+.page-subtitle {
+    font-family: var(--font-sans) !important;
+    font-size: 1.15rem !important;
+    color: var(--text-secondary) !important;
+    max-width: 700px !important;
+    margin: 0 auto !important;
+    line-height: 1.6 !important;
+    letter-spacing: 0.5px !important;
+}
+
+/* Section title within pages - STANDARDIZED at 1.5rem */
+.content-section-title {
+    font-family: var(--font-heading) !important;
+    font-size: 1.5rem !important;
+    font-weight: 600 !important;
+    color: var(--primary-color) !important;
+    text-shadow: 0 0 3px var(--primary-glow) !important;
+    letter-spacing: 0.5px !important;
+    margin: 0 0 1.25rem !important;
+}
+
+@media (max-width: 768px) {
+    .page-title {
+        font-size: 2rem !important;
+    }
+
+    .page-subtitle {
+        font-size: 1rem !important;
+    }
+
+    .content-section-title {
+        font-size: 1.5rem !important;
+    }
+}
+
+
+/* Focus indicators for accessibility */
+:focus-visible {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+    box-shadow: var(--neon-glow);
+}
+
+/* Global Scrollbar */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-medium);
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(to bottom, var(--primary-color), var(--secondary-color));
+    border-radius: 5px;
+}
+
+/* Utility Animations */
+@keyframes glitch {
+    0% {
+        text-shadow: 2px 2px 0px var(--accent-color), -1px -1px 0px var(--secondary-color);
+    }
+
+    25% {
+        text-shadow: -2px 2px 0px var(--accent-color), 1px -1px 0px var(--secondary-color);
+    }
+
+    50% {
+        text-shadow: 2px -2px 0px var(--accent-color), -1px 1px 0px var(--secondary-color);
+    }
+
+    75% {
+        text-shadow: -2px -2px 0px var(--accent-color), 1px 1px 0px var(--secondary-color);
+    }
+
+    100% {
+        text-shadow: 2px 2px 0px var(--accent-color), -1px -1px 0px var(--secondary-color);
+    }
+}
+
+@keyframes typing {
+    from {
+        width: 0;
+    }
+
+    to {
+        width: 100%;
+    }
+}

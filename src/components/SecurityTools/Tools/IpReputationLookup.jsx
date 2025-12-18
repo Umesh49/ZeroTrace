@@ -22,7 +22,11 @@ const IpReputationLookup = () => {
       setResult(reputationData);
     } catch (err) {
       console.error("Error looking up IP reputation:", err);
-      setError("Failed to lookup IP reputation. Please try again.");
+      // Provide educational context and alternatives
+      setError(
+        "Unable to fetch live reputation data. This demo feature uses AbuseIPDB API which may have rate limits. " +
+        "For comprehensive IP checks, you can visit: abuseipdb.com, virustotal.com, or ipvoid.com"
+      );
     } finally {
       setIsLoading(false);
     }
@@ -44,12 +48,18 @@ const IpReputationLookup = () => {
     <div className="security-tools">
       <div className="sec-tool-container">
         <div className="sec-tool-header">
-          <h1 className="sec-tool-title">IP Reputation Lookup</h1>
+          <h1 className="sec-tool-title page-title">IP Reputation Lookup</h1>
           <p className="sec-tool-subtitle">Check if an IP address has been reported for malicious activity</p>
         </div>
 
         <div className="sec-tool-card">
           <div className="sec-tool-card-body">
+            <div className="sec-tool-notice" style={{ marginBottom: '1rem', padding: '0.75rem', backgroundColor: 'rgba(0, 255, 170, 0.1)', borderRadius: '6px', borderLeft: '3px solid #00ffaa' }}>
+              <p style={{ margin: 0, fontSize: '0.85rem', color: '#a0a0a0' }}>
+                <strong style={{ color: '#00ffaa' }}>Educational Demo:</strong> This tool demonstrates IP reputation checking.
+                For production use, consider <a href="https://www.abuseipdb.com" target="_blank" rel="noopener noreferrer" style={{ color: '#00ffaa' }}>AbuseIPDB</a> or <a href="https://www.virustotal.com" target="_blank" rel="noopener noreferrer" style={{ color: '#00ffaa' }}>VirusTotal</a>.
+              </p>
+            </div>
             <div className="sec-tool-form-group">
               <label htmlFor="ipAddress" className="sec-tool-label">
                 Enter IP Address

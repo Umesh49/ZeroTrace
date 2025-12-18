@@ -415,11 +415,11 @@ export const checkPasswordSecurity = async (password) => {
       recommendations:
         breachCount > 0
           ? [
-              "Change this password immediately on all sites where you use it",
-              "Use a unique password for each service",
-              "Consider using a password manager",
-              "Create stronger passwords with a mix of characters, numbers, and symbols",
-            ]
+            "Change this password immediately on all sites where you use it",
+            "Use a unique password for each service",
+            "Consider using a password manager",
+            "Create stronger passwords with a mix of characters, numbers, and symbols",
+          ]
           : [],
     };
   } catch (error) {
@@ -521,24 +521,22 @@ export const validateHashFormat = (hash, algorithm) => {
 };
 
 export const checkPasswordStrength = (password) => {
-  const result = zxcvbn(password);
+  const analysis = analyzePasswordStrength(password);
 
   let strength = "weak";
-  if (result.score >= 3) {
+  if (analysis.strength === "Very Strong" || analysis.strength === "Strong") {
     strength = "strong";
-  } else if (result.score >= 2) {
+  } else if (analysis.strength === "Moderate") {
     strength = "medium";
   }
 
   return {
     strength,
-    score: result.score + 1,
-    feedback: [
-      ...(result.feedback.warning ? [result.feedback.warning] : []),
-      ...(result.feedback.suggestions || []),
-    ],
+    score: Math.min(5, Math.ceil(analysis.entropy / 20)),
+    feedback: analysis.suggestions,
   };
 };
+
 export const analyzePrivacyPolicy = async (url) => {
   const extractDomain = (u) => {
     try {
@@ -666,8 +664,8 @@ export const analyzePrivacyPolicy = async (url) => {
           p.case && typeof p.case === "object"
             ? p.case.classification
             : typeof p.case === "string"
-            ? p.case
-            : null;
+              ? p.case
+              : null;
         arr.push({
           name: t,
           rating: caseToRating(caseClassification),
@@ -1056,13 +1054,13 @@ function createMockScanResult(url) {
     recommendations:
       score > 5
         ? [
-            "Exercise caution with this site",
-            "Verify the site's legitimacy before sharing information",
-          ]
+          "Exercise caution with this site",
+          "Verify the site's legitimacy before sharing information",
+        ]
         : [
-            "No obvious threats detected",
-            "Always practice safe browsing habits",
-          ],
+          "No obvious threats detected",
+          "Always practice safe browsing habits",
+        ],
     isMockData: true,
   };
 }

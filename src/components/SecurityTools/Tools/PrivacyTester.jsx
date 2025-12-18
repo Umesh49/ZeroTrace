@@ -23,7 +23,7 @@ const PrivacyTester = () => {
     <div className="security-tools">
       <div className="sec-tool-container">
         <div className="sec-tool-header">
-          <h1 className="sec-tool-title">Privacy Tester</h1>
+          <h1 className="sec-tool-title page-title">Privacy Tester</h1>
           <p className="sec-tool-subtitle">Check your browser for privacy leaks</p>
         </div>
         <div className="sec-tool-card">

@@ -28,7 +28,7 @@ const Navbar = () => {
     };
 
     generateBinary();
-    const interval = setInterval(generateBinary, 300);
+    const interval = setInterval(generateBinary, 2000);
     return () => clearInterval(interval);
   }, []);
 
@@ -181,9 +181,8 @@ const Navbar = () => {
 
               <div className="nav-terminal-text">
                 <div
-                  className={`nav-terminal-content ${
-                    terminalReady ? "nav-terminal-ready" : ""
-                  }`}
+                  className={`nav-terminal-content ${terminalReady ? "nav-terminal-ready" : ""
+                    }`}
                 >
                   {terminalText}
                   <span className="nav-terminal-cursor"></span>

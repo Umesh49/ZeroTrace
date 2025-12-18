@@ -15,7 +15,7 @@ import {
   FaAngleLeft,
   FaAngleRight,
 } from "react-icons/fa";
-import CyberSpinner from "../common/CyberSpinner/CyberSpinner.jsx";
+import { SkeletonPage } from "../common/Skeleton/Skeleton.jsx";
 import "./FAQ.css";
 import faqs from "./FAQ_Data.js";
 
@@ -189,7 +189,7 @@ function FAQ() {
             <div className="safeguard-header-brackets">
               <span className="safeguard-header-bracket left">[</span>
               <div className="safeguard-header-inner">
-                <h1 className="safeguard-header-title">
+                <h1 className="safeguard-header-title page-title">
                   FREQUENTLY ASKED QUESTIONS
                 </h1>
                 <div className="safeguard-header-subtitle">
@@ -268,20 +268,7 @@ function FAQ() {
       <section className="safeguard-faq-content">
         <div className="safeguard-container">
           {isLoading ? (
-            <div className="safeguard-loading-container">
-              <CyberSpinner size="large" text="Loading FAQ database..." />
-              <div className="safeguard-loading-messages">
-                <div className="safeguard-loading-message">
-                  Retrieving information...
-                </div>
-                <div className="safeguard-loading-message">
-                  Processing data...
-                </div>
-                <div className="safeguard-loading-message">
-                  Preparing results...
-                </div>
-              </div>
-            </div>
+            <SkeletonPage type="default" />
           ) : (
             <div className="safeguard-faq-layout">
               <div className="safeguard-faq-categories">
@@ -292,9 +279,8 @@ function FAQ() {
                 <ul className="safeguard-categories-list">
                   {isSearching && (
                     <li
-                      className={`safeguard-category-item ${
-                        activeCategory === "all" ? "active" : ""
-                      }`}
+                      className={`safeguard-category-item ${activeCategory === "all" ? "active" : ""
+                        }`}
                       onClick={() => setActiveCategory("all")}
                     >
                       <span className="safeguard-category-icon">
@@ -315,9 +301,8 @@ function FAQ() {
                   {categories.map((category) => (
                     <li
                       key={category.id}
-                      className={`safeguard-category-item ${
-                        activeCategory === category.id ? "active" : ""
-                      }`}
+                      className={`safeguard-category-item ${activeCategory === category.id ? "active" : ""
+                        }`}
                       onClick={() => handleCategoryClick(category.id)}
                     >
                       <span className="safeguard-category-icon">
@@ -343,16 +328,15 @@ function FAQ() {
                 <div className="safeguard-panel-header">
                   <span className="safeguard-panel-title">
                     {isSearching
-                      ? `SEARCH RESULTS: ${
-                          activeCategory === "all"
-                            ? "ALL CATEGORIES"
-                            : categories
-                                .find((c) => c.id === activeCategory)
-                                ?.name.toUpperCase()
-                        }`
-                      : `${categories
+                      ? `SEARCH RESULTS: ${activeCategory === "all"
+                        ? "ALL CATEGORIES"
+                        : categories
                           .find((c) => c.id === activeCategory)
-                          ?.name.toUpperCase()} FAQs`}
+                          ?.name.toUpperCase()
+                      }`
+                      : `${categories
+                        .find((c) => c.id === activeCategory)
+                        ?.name.toUpperCase()} FAQs`}
                   </span>
                   <div className="safeguard-panel-indicator"></div>
                 </div>
@@ -386,13 +370,11 @@ function FAQ() {
                         return (
                           <div
                             key={actualIndex}
-                            className={`safeguard-faq-item ${
-                              activeFaq === actualIndex ? "active" : ""
-                            } ${
-                              animatedItems.includes(index.toString())
+                            className={`safeguard-faq-item ${activeFaq === actualIndex ? "active" : ""
+                              } ${animatedItems.includes(index.toString())
                                 ? "animated"
                                 : ""
-                            }`}
+                              }`}
                             data-index={index.toString()}
                           >
                             <div
@@ -468,9 +450,8 @@ function FAQ() {
                                 return (
                                   <button
                                     key={pageNum}
-                                    className={`safeguard-page-number ${
-                                      currentPage === pageNum ? "active" : ""
-                                    }`}
+                                    className={`safeguard-page-number ${currentPage === pageNum ? "active" : ""
+                                      }`}
                                     onClick={() => {
                                       setCurrentPage(pageNum);
                                       setActiveFaq(null);

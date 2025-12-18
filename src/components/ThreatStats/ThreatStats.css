@@ -1,8 +1,8 @@
 .threat-map-grid-wrapper {
   padding: 3rem 1.5rem;
-  background-color: #080b12;
-  color: #d4f2ff;
-  font-family: "Rajdhani", "Orbitron", sans-serif;
+  background-color: var(--secondary-color);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
   max-width: 1600px;
   margin: 0 auto;
   position: relative;
@@ -16,17 +16,17 @@
 }
 
 .threat-map-grid-title {
-  font-family: "Orbitron", sans-serif;
+  font-family: var(--font-heading);
   font-size: 3rem;
   font-weight: bold;
   margin: 0 0 1rem;
   color: #fff;
-  text-shadow: 0 0 10px rgba(0, 195, 255, 0.8);
+  text-shadow: var(--neon-glow);
 }
 
 .threat-map-grid-subtitle {
   font-size: 1.2rem;
-  color: rgba(212, 242, 255, 0.8);
+  color: var(--text-secondary);
   margin: 0.5rem 0 1.5rem;
 }
 
@@ -36,12 +36,10 @@
   width: 150px;
   height: 3px;
   margin: 1rem auto;
-  background: linear-gradient(
-    90deg,
-    rgba(0, 195, 255, 0) 0%,
-    rgba(0, 195, 255, 0.8) 50%,
-    rgba(0, 195, 255, 0) 100%
-  );
+  background: linear-gradient(90deg,
+      var(--info-glow) 0%,
+      var(--info-dim) 50%,
+      var(--info-glow) 100%);
 }
 
 .threat-map-stats-container {
@@ -52,8 +50,8 @@
 }
 
 .threat-map-stat-card {
-  background-color: rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(0, 195, 255, 0.3);
+  background-color: var(--bg-medium);
+  border: 1px solid var(--border-color);
   border-radius: 8px;
   padding: 2rem;
   text-align: center;
@@ -65,7 +63,7 @@
 
 .threat-map-stat-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 0 20px rgba(0, 195, 255, 0.2);
+  box-shadow: 0 0 20px var(--primary-glow);
 }
 
 .threat-map-stat-card:before {
@@ -75,7 +73,7 @@
   left: 0;
   width: 100%;
   height: 3px;
-  background-color: rgba(0, 195, 255, 0.5);
+  background-color: var(--primary-color);
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 0.3s ease;
@@ -87,7 +85,7 @@
 
 .threat-map-stat-title {
   font-size: 1rem;
-  color: rgba(212, 242, 255, 0.7);
+  color: var(--text-secondary);
   margin: 0 0 1rem;
   font-weight: 500;
   text-transform: uppercase;
@@ -95,12 +93,12 @@
 }
 
 .threat-map-stat-value {
-  font-family: "Orbitron", sans-serif;
+  font-family: var(--font-heading);
   font-size: 2.5rem;
   font-weight: 700;
-  color: #00c3ff;
+  color: var(--primary-color);
   margin: 0;
-  text-shadow: 0 0 10px rgba(0, 195, 255, 0.5);
+  text-shadow: var(--neon-glow);
 }
 
 .threat-map-category-value {
@@ -108,8 +106,8 @@
 }
 
 .threat-map-grid-container {
-  background-color: rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(0, 195, 255, 0.2);
+  background-color: var(--bg-medium);
+  border: 1px solid var(--border-color);
   border-radius: 8px;
   overflow: hidden;
   margin-bottom: 2rem;
@@ -124,7 +122,7 @@
 
 .threat-map-threat-table th {
   background-color: rgba(0, 0, 0, 0.4);
-  color: #94a3b8;
+  color: var(--text-secondary);
   font-weight: 500;
   padding: 1rem 1.25rem;
   font-size: 0.9rem;
@@ -134,7 +132,7 @@
 
 .threat-map-threat-table td {
   padding: 1rem 1.25rem;
-  border-top: 1px solid rgba(0, 195, 255, 0.1);
+  border-top: 1px solid var(--info-glow);
   font-size: 1rem;
 }
 
@@ -144,11 +142,11 @@
 }
 
 .threat-map-threat-table tr:hover {
-  background-color: rgba(0, 195, 255, 0.05);
+  background-color: var(--bg-light);
 }
 
 .threat-map-selected-row {
-  background-color: rgba(0, 195, 255, 0.1) !important;
+  background-color: rgba(0, 255, 170, 0.05) !important;
   position: relative;
 }
 
@@ -158,9 +156,9 @@
   left: 0;
   height: 100%;
   width: 4px;
-  background-color: #00c3ff;
+  background-color: var(--primary-color);
   top: 0;
-  box-shadow: 0 0 10px rgba(0, 195, 255, 0.8);
+  box-shadow: var(--neon-glow);
 }
 
 .threat-map-country-cell {
@@ -183,15 +181,15 @@
 }
 
 .threat-map-confidence-value.high {
-  color: #ff5555;
+  color: var(--danger-color);
 }
 
 .threat-map-confidence-value.medium {
-  color: #ffb03e;
+  color: var(--warning-color);
 }
 
 .threat-map-confidence-value.low {
-  color: #00ffaa;
+  color: var(--primary-color);
 }
 
 .threat-map-severity-badge {
@@ -203,26 +201,26 @@
 }
 
 .threat-map-severity-badge.high {
-  background-color: rgba(255, 85, 85, 0.2);
-  color: #ff5555;
-  border: 1px solid rgba(255, 85, 85, 0.5);
+  background-color: var(--danger-glow);
+  color: var(--danger-color);
+  border: 1px solid var(--danger-dim);
 }
 
 .threat-map-severity-badge.medium {
-  background-color: rgba(255, 176, 62, 0.2);
-  color: #ffb03e;
-  border: 1px solid rgba(255, 176, 62, 0.5);
+  background-color: var(--warning-glow);
+  color: var(--warning-color);
+  border: 1px solid var(--warning-dim);
 }
 
 .threat-map-severity-badge.low {
-  background-color: rgba(0, 255, 170, 0.2);
-  color: #00ffaa;
-  border: 1px solid rgba(0, 255, 170, 0.5);
+  background-color: var(--primary-glow);
+  color: var(--primary-color);
+  border: 1px solid var(--primary-dim);
 }
 
 .threat-map-detail-view {
-  background-color: rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(0, 195, 255, 0.3);
+  background-color: var(--bg-medium);
+  border: 1px solid var(--border-color);
   border-radius: 8px;
   margin-bottom: 2rem;
   padding: 1.5rem;
@@ -236,14 +234,14 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1.5rem;
-  border-bottom: 1px solid rgba(0, 195, 255, 0.2);
+  border-bottom: 1px solid var(--primary-glow);
   padding-bottom: 1rem;
 }
 
 .threat-map-detail-header h3 {
   margin: 0;
   font-size: 1.5rem;
-  font-family: "Orbitron", sans-serif;
+  font-family: var(--font-heading);
   font-weight: 600;
   color: #fff;
 }
@@ -251,7 +249,7 @@
 .threat-map-close-button {
   background: none;
   border: none;
-  color: #94a3b8;
+  color: var(--text-secondary);
   font-size: 1.5rem;
   cursor: pointer;
   padding: 0;
@@ -261,7 +259,7 @@
 }
 
 .threat-map-close-button:hover {
-  color: #00c3ff;
+  color: var(--primary-color);
 }
 
 .threat-map-detail-stats {
@@ -272,8 +270,8 @@
 }
 
 .threat-map-detail-stat {
-  background-color: rgba(0, 0, 0, 0.2);
-  border: 1px solid rgba(0, 195, 255, 0.1);
+  background-color: var(--bg-light);
+  border: 1px solid var(--primary-dim);
   border-radius: 6px;
   padding: 1rem;
   display: flex;
@@ -295,8 +293,8 @@
 }
 
 .threat-map-severity-distribution {
-  background-color: rgba(0, 0, 0, 0.2);
-  border: 1px solid rgba(0, 195, 255, 0.1);
+  background-color: var(--bg-light);
+  border: 1px solid var(--primary-dim);
   border-radius: 6px;
   padding: 1.5rem;
   margin-bottom: 1.5rem;
@@ -306,7 +304,7 @@
   font-size: 1.1rem;
   margin: 0 0 1rem;
   font-weight: 600;
-  font-family: "Orbitron", sans-serif;
+  font-family: var(--font-heading);
   color: #fff;
 }
 
@@ -329,15 +327,15 @@
 }
 
 .threat-map-severity-bar.high {
-  background-color: #ff5555;
+  background-color: var(--danger-color);
 }
 
 .threat-map-severity-bar.medium {
-  background-color: #ffb03e;
+  background-color: var(--warning-color);
 }
 
 .threat-map-severity-bar.low {
-  background-color: #00ffaa;
+  background-color: var(--terminal-green);
 }
 
 .threat-map-severity-legend {
@@ -359,15 +357,15 @@
 }
 
 .threat-map-legend-color.high {
-  background-color: #ff5555;
+  background-color: var(--danger-color);
 }
 
 .threat-map-legend-color.medium {
-  background-color: #ffb03e;
+  background-color: var(--warning-color);
 }
 
 .threat-map-legend-color.low {
-  background-color: #00ffaa;
+  background-color: var(--primary-color);
 }
 
 .threat-map-legend-text {
@@ -376,8 +374,8 @@
 }
 
 .threat-map-recent-activity {
-  background-color: rgba(0, 0, 0, 0.2);
-  border: 1px solid rgba(0, 195, 255, 0.1);
+  background-color: var(--bg-medium);
+  border: 1px solid var(--border-color);
   border-radius: 6px;
   padding: 1.5rem;
 }
@@ -386,7 +384,7 @@
   font-size: 1.1rem;
   margin: 0 0 1rem;
   font-weight: 600;
-  font-family: "Orbitron", sans-serif;
+  font-family: var(--font-heading);
   color: #fff;
 }
 
@@ -398,8 +396,8 @@
 .threat-map-activity-table th {
   text-align: left;
   padding: 0.75rem 1rem;
-  background-color: rgba(0, 0, 0, 0.3);
-  color: #94a3b8;
+  background-color: var(--bg-light);
+  color: var(--text-secondary);
   font-weight: 500;
   font-size: 0.85rem;
   text-transform: uppercase;
@@ -408,7 +406,7 @@
 
 .threat-map-activity-table td {
   padding: 0.75rem 1rem;
-  border-top: 1px solid rgba(0, 195, 255, 0.1);
+  border-top: 1px solid var(--border-color);
   font-size: 0.9rem;
 }
 
@@ -418,17 +416,17 @@
   align-items: center;
   justify-content: center;
   height: 400px;
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: var(--bg-medium);
   border-radius: 8px;
-  border: 1px solid rgba(0, 195, 255, 0.2);
+  border: 1px solid var(--border-color);
 }
 
 .threat-map-loading-text {
-  font-family: "Orbitron", sans-serif;
+  font-family: var(--font-heading);
   font-size: 1.5rem;
-  color: #00c3ff;
+  color: var(--primary-color);
   margin: 2rem 0;
-  text-shadow: 0 0 10px rgba(0, 195, 255, 0.8);
+  text-shadow: var(--neon-glow);
 }
 
 .threat-map-error-container {
@@ -440,7 +438,7 @@
   background-color: rgba(0, 0, 0, 0.3);
   border-radius: 8px;
   border: 1px solid rgba(255, 85, 85, 0.3);
-  color: #ff5555;
+  color: var(--danger-color);
 }
 
 .threat-map-error-icon {
@@ -448,7 +446,7 @@
   height: 60px;
   border-radius: 50%;
   background-color: rgba(255, 85, 85, 0.2);
-  border: 2px solid #ff5555;
+  border: 2px solid var(--danger-color);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -464,7 +462,7 @@
   background-color: rgba(255, 85, 85, 0.2);
   border: 1px solid rgba(255, 85, 85, 0.5);
   border-radius: 4px;
-  color: #ff5555;
+  color: var(--danger-color);
   cursor: pointer;
   font-size: 1rem;
   transition: all 0.3s ease;
@@ -492,6 +490,7 @@
     opacity: 0;
     transform: translateY(10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);

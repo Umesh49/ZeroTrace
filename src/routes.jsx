@@ -1,43 +1,47 @@
-import { Suspense } from "react";
+import { Suspense, lazy } from "react";
 import { Routes, Route } from "react-router-dom";
-import Home from "./components/Home/Home";
-import IndianLaws from "./components/IndianLaws/IndianLaws";
-import ComplaintGuide from "./components/ComplaintGuide/ComplaintGuide.jsx";
-import ComplaintForm from "./components/ComplaintForm/ComplaintForm.jsx";
-import SecurityTools from "./components/SecurityTools/SecurityTools";
-import CyberAwarenessQuiz from "./components/Quiz/CyberAwarenessQuiz";
-import QuizCategorySelector from "./components/Quiz/QuizCategorySelector";
-import SecurityChecklist from "./components/SecurityChecklist/SecurityChecklist";
-import FAQ from "./components/FAQs/FAQ";
-import Contact from "./components/Contact/Contact";
-import AboutUs from "./components/About/AboutUs";
-import Tutorials from "./components/Tutorials/Tutorials";
-import Chatbot from "./components/Chatbot/Chatbot.jsx";
-import PrivacyPolicy from "./components/StaticPages/PrivacyPolicy";
-import TermsOfService from "./components/StaticPages/TermsOfService";
-import NotFound from "./components/NotFound/NotFound";
-import CyberSpinner from "./components/common/CyberSpinner/CyberSpinner.jsx";
-import BreachExposureChecker from "./components/SecurityTools/Tools/BreachExposureChecker.jsx";
-import BrowserFingerprinting from "./components/SecurityTools/Tools/BrowserFingerprinting.jsx";
-import DnsLeakTester from "./components/SecurityTools/Tools/DnsLeakTester.jsx";
-import FileEncryption from "./components/SecurityTools/Tools/FileEncryption.jsx";
-import IpGeolocation from "./components/SecurityTools/Tools/IpGeolocation.jsx";
-import IpReputationLookup from "./components/SecurityTools/Tools/IpReputationLookup.jsx";
-import PasswordGenerator from "./components/SecurityTools/Tools/PasswordGenerator.jsx";
-import PasswordStrengthMeter from "./components/SecurityTools/Tools/PasswordStrengthMeter.jsx";
-import PrivacyPolicyAnalyzer from "./components/SecurityTools/Tools/PrivacyPolicyAnalyzer.jsx";
-import PrivacyTester from "./components/SecurityTools/Tools/PrivacyTester.jsx";
-import QrCodeGenerator from "./components/SecurityTools/Tools/QrCodeGenerator.jsx";
-import SafeBrowsingCheck from "./components/SecurityTools/Tools/SafeBrowsingCheck.jsx";
-import SecurityHeadersAudit from "./components/SecurityTools/Tools/SecurityHeadersAudit.jsx";
-import UrlMalwareScanner from "./components/SecurityTools/Tools/UrlMalwareScanner.jsx";
-import ThreatStats from "./components/ThreatStats/ThreatStats.jsx";
-import SecurityNews from "./components/SecurityNews/SecurityNews.jsx";
-import CaseStudies from "./components/CaseStudy/CaseStudy.jsx";
+import { SkeletonPage } from "./components/common/Skeleton/Skeleton.jsx";
+
+// Lazy load all route components for optimal code-splitting
+const Home = lazy(() => import("./components/Home/Home"));
+const IndianLaws = lazy(() => import("./components/IndianLaws/IndianLaws"));
+const ComplaintGuide = lazy(() => import("./components/ComplaintGuide/ComplaintGuide.jsx"));
+const ComplaintForm = lazy(() => import("./components/ComplaintForm/ComplaintForm.jsx"));
+const SecurityTools = lazy(() => import("./components/SecurityTools/SecurityTools"));
+const CyberAwarenessQuiz = lazy(() => import("./components/Quiz/CyberAwarenessQuiz"));
+const QuizCategorySelector = lazy(() => import("./components/Quiz/QuizCategorySelector"));
+const SecurityChecklist = lazy(() => import("./components/SecurityChecklist/SecurityChecklist"));
+const FAQ = lazy(() => import("./components/FAQs/FAQ"));
+const Contact = lazy(() => import("./components/Contact/Contact"));
+const AboutUs = lazy(() => import("./components/About/AboutUs"));
+const Tutorials = lazy(() => import("./components/Tutorials/Tutorials"));
+const Chatbot = lazy(() => import("./components/Chatbot/Chatbot.jsx"));
+const PrivacyPolicy = lazy(() => import("./components/StaticPages/PrivacyPolicy"));
+const TermsOfService = lazy(() => import("./components/StaticPages/TermsOfService"));
+const NotFound = lazy(() => import("./components/NotFound/NotFound"));
+const ThreatStats = lazy(() => import("./components/ThreatStats/ThreatStats.jsx"));
+const SecurityNews = lazy(() => import("./components/SecurityNews/SecurityNews.jsx"));
+const CaseStudies = lazy(() => import("./components/CaseStudy/CaseStudy.jsx"));
+
+// Security Tools - Lazy loaded
+const BreachExposureChecker = lazy(() => import("./components/SecurityTools/Tools/BreachExposureChecker.jsx"));
+const BrowserFingerprinting = lazy(() => import("./components/SecurityTools/Tools/BrowserFingerprinting.jsx"));
+const DnsLeakTester = lazy(() => import("./components/SecurityTools/Tools/DnsLeakTester.jsx"));
+const FileEncryption = lazy(() => import("./components/SecurityTools/Tools/FileEncryption.jsx"));
+const IpGeolocation = lazy(() => import("./components/SecurityTools/Tools/IpGeolocation.jsx"));
+const IpReputationLookup = lazy(() => import("./components/SecurityTools/Tools/IpReputationLookup.jsx"));
+const PasswordGenerator = lazy(() => import("./components/SecurityTools/Tools/PasswordGenerator.jsx"));
+const PasswordStrengthMeter = lazy(() => import("./components/SecurityTools/Tools/PasswordStrengthMeter.jsx"));
+const PrivacyPolicyAnalyzer = lazy(() => import("./components/SecurityTools/Tools/PrivacyPolicyAnalyzer.jsx"));
+const PrivacyTester = lazy(() => import("./components/SecurityTools/Tools/PrivacyTester.jsx"));
+const QrCodeGenerator = lazy(() => import("./components/SecurityTools/Tools/QrCodeGenerator.jsx"));
+const SafeBrowsingCheck = lazy(() => import("./components/SecurityTools/Tools/SafeBrowsingCheck.jsx"));
+const SecurityHeadersAudit = lazy(() => import("./components/SecurityTools/Tools/SecurityHeadersAudit.jsx"));
+const UrlMalwareScanner = lazy(() => import("./components/SecurityTools/Tools/UrlMalwareScanner.jsx"));
 
 export default function AppRoutes() {
   return (
-    <Suspense fallback={<CyberSpinner />}>
+    <Suspense fallback={<SkeletonPage type="default" />}>
       <Routes>
         <Route path="/home" element={<Home />} />
         <Route path="/security-checklist" element={<SecurityChecklist />} />
@@ -57,7 +61,7 @@ export default function AppRoutes() {
         <Route path="/security-news" element={<SecurityNews />} />
         <Route path="/threat-stats" element={<ThreatStats />} />
         <Route path="/case-study" element={<CaseStudies />} />
-        
+
         {/* Tools */}
         <Route path="/breach-exposure-checker" element={<BreachExposureChecker />} />
         <Route path="/browser-fingerprinting" element={<BrowserFingerprinting />} />

@@ -41,7 +41,7 @@ const QrCodeGenerator = () => {
     <div className="security-tools">
       <div className="sec-tool-container">
         <div className="sec-tool-header">
-          <h1 className="sec-tool-title">QR Code Generator</h1>
+          <h1 className="sec-tool-title page-title">QR Code Generator</h1>
           <p className="sec-tool-subtitle">Generate QR codes for URLs or text</p>
         </div>
         <div className="sec-tool-card">

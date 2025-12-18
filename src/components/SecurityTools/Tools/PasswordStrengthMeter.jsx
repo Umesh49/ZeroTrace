@@ -40,7 +40,7 @@ const PasswordStrengthMeter = () => {
     <div className="security-tools">
       <div className="sec-tool-container">
         <div className="sec-tool-header">
-          <h1 className="sec-tool-title">Password Strength Meter</h1>
+          <h1 className="sec-tool-title page-title">Password Strength Meter</h1>
           <p className="sec-tool-subtitle">Check how strong your password is</p>
         </div>
 

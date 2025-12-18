@@ -8,10 +8,10 @@ const getLevenshteinDistance = (a, b) => {
         b.charAt(i - 1) === a.charAt(j - 1)
           ? matrix[i - 1][j - 1]
           : Math.min(
-              matrix[i - 1][j - 1] + 1,
-              matrix[i][j - 1] + 1,
-              matrix[i - 1][j] + 1
-            );
+            matrix[i - 1][j - 1] + 1,
+            matrix[i][j - 1] + 1,
+            matrix[i - 1][j] + 1
+          );
     }
   }
   return matrix[b.length][a.length];
@@ -157,7 +157,7 @@ export const generateRuleBasedResponse = (input) => {
   const intents = detectIntent(lowerInput);
   const TYPO_THRESHOLD = 3;
   const MAX_SCORE = 30;
-  const CONFIDENCE_THRESHOLD = 0.5;
+  const CONFIDENCE_THRESHOLD = 0.3;
 
   class ScoredMatch {
     constructor(type, item, score) {
@@ -170,15 +170,163 @@ export const generateRuleBasedResponse = (input) => {
 
   const matches = [];
 
+  // Handle greetings
   if (isGreeting(lowerInput)) {
-    return "Hello! I'm ZeroBot, your cybersecurity assistant. Ask about cyber threats, Indian cyber laws, best practices, or how to report a cybercrime!";
+    return "Hello! I'm ZeroBot, your cybersecurity assistant. I can help you with:\n\n- Cyber threats: Learn about phishing, ransomware, malware, etc.\n- Indian cyber laws: IT Act sections and penalties\n- Protection tips: Best practices to stay safe online\n- Reporting cybercrimes: How and where to report incidents\n\nWhat would you like to know about?";
   }
 
+  // Handle identity questions
+  if (lowerInput.includes("who are you") || lowerInput.includes("what are you") || lowerInput.includes("your name")) {
+    return "I'm ZeroBot, a cybersecurity assistant developed for ZeroTrace. I specialize in:\n\n- Indian cyber laws and IT Act provisions\n- Cyber threats and attack types\n- Protection and prevention measures\n- Cybercrime reporting procedures\n\nI use rule-based intelligence to provide accurate information about cybersecurity topics. How can I assist you today?";
+  }
+
+  // Handle capability questions
+  if (lowerInput.includes("what can you do") || lowerInput.includes("help me") || lowerInput.includes("how can you help") || lowerInput.includes("your features")) {
+    return "I can help you with:\n\nINDIAN CYBER LAWS\n- IT Act sections (66, 66A, 66C, 66F, etc.)\n- Penalties and provisions\n- DPDP Act 2023\n\nCYBER THREATS\n- Phishing, Ransomware, Malware\n- DDoS, SQL Injection, Social Engineering\n- Protection measures for each\n\nSECURITY BEST PRACTICES\n- Password security, MFA\n- Network and endpoint security\n- Data protection\n\nREPORTING\n- cybercrime.gov.in\n- 1930 Helpline\n- Local cyber cells\n\nJust ask me about any of these topics!";
+  }
+
+  // Handle thank you
+  if (lowerInput.includes("thank") || lowerInput.includes("thanks")) {
+    return "You're welcome! Stay safe online. If you have more questions about cybersecurity, feel free to ask anytime.";
+  }
+
+  // Handle goodbye
+  if (lowerInput.includes("bye") || lowerInput.includes("goodbye") || lowerInput.includes("see you")) {
+    return "Goodbye! Remember to stay vigilant online. Visit cybercrime.gov.in if you ever need to report a cybercrime. Take care!";
+  }
+
+  // Handle helpline questions
+  if (lowerInput.includes("helpline") || lowerInput.includes("1930") || lowerInput.includes("emergency number") || lowerInput.includes("contact number")) {
+    return "EMERGENCY CYBERCRIME HELPLINES\n\n- 1930: National Cyber Crime Helpline (24/7)\n- cybercrime.gov.in: Online reporting portal\n- 112: Emergency services\n- CERT-In: cert-in.org.in for technical incidents\n\nLocal Cyber Cells:\n- Delhi: delhipolice.gov.in\n- Mumbai: mumbaipolice.gov.in\n- Bangalore: bcp.karnataka.gov.in\n\nFor financial fraud, also contact your bank immediately!";
+  }
+
+  // FAQ-based direct matching for common questions
+  const faqPatterns = [
+    {
+      patterns: ["password", "strong password", "password security", "password tips", "secure password"],
+      response: "PASSWORD SECURITY BEST PRACTICES\n\nCreating Strong Passwords:\n- Use at least 12-16 characters\n- Mix uppercase, lowercase, numbers, and symbols\n- Avoid personal info (birthdays, names)\n- Don't use dictionary words\n\nManaging Passwords:\n- Use a password manager (Bitwarden, LastPass)\n- Never reuse passwords across sites\n- Enable 2FA/MFA everywhere possible\n- Change passwords if you suspect a breach\n\nRed Flags:\n- Password reset emails you didn't request\n- Login alerts from unknown locations\n- Unable to access your account"
+    },
+    {
+      patterns: ["phishing", "phishing attack", "phishing email", "fake email", "suspicious email"],
+      response: "PHISHING ATTACKS\n\nWhat is Phishing?\nDeceptive attempts to steal sensitive info by posing as trusted entities.\n\nWarning Signs:\n- Urgent language ('Account suspended!')\n- Spelling/grammar errors\n- Suspicious sender addresses\n- Links to unfamiliar websites\n- Requests for personal information\n\nProtection:\n- Verify sender email addresses\n- Hover over links before clicking\n- Never share passwords via email\n- Contact companies directly if unsure\n- Use email filters\n\nIf You Clicked:\n1. Disconnect from internet\n2. Change passwords immediately\n3. Run antivirus scan\n4. Report to cybercrime.gov.in"
+    },
+    {
+      patterns: ["ransomware", "files encrypted", "ransom attack", "locked files", "decrypt files"],
+      response: "RANSOMWARE\n\nWhat is Ransomware?\nMalware that encrypts your files and demands payment for the decryption key.\n\nPrevention:\n- Keep regular offline backups\n- Update all software promptly\n- Don't open suspicious attachments\n- Use reputable antivirus software\n- Train employees on security\n\nIf Infected:\n1. Disconnect from network immediately\n2. Do NOT pay the ransom\n3. Report to cybercrime.gov.in (1930)\n4. Restore from clean backups\n5. Check nomoreransom.org for decryption tools\n\nCommon Types: WannaCry, Ryuk, LockBit, REvil"
+    },
+    {
+      patterns: ["hack", "hacking", "hacked", "someone hacked", "been hacked", "protect from hackers"],
+      response: "HACKING PROTECTION\n\nSigns You've Been Hacked:\n- Unexpected account activity\n- Password not working\n- Strange emails sent from your account\n- New programs you didn't install\n- Slow device performance\n\nImmediate Steps if Hacked:\n1. Change all passwords from a secure device\n2. Enable 2FA on all accounts\n3. Check for unauthorized transactions\n4. Run full antivirus scan\n5. Report to cybercrime.gov.in or call 1930\n\nPrevention:\n- Use strong, unique passwords\n- Enable MFA everywhere\n- Keep software updated\n- Be cautious with public WiFi\n- Don't click suspicious links"
+    },
+    {
+      patterns: ["vpn", "virtual private network", "need vpn", "vpn safe"],
+      response: "VPN (VIRTUAL PRIVATE NETWORK)\n\nWhat is a VPN?\nEncrypts your internet connection and hides your IP address for privacy.\n\nWhen to Use:\n- On public WiFi\n- Accessing sensitive data\n- When privacy is important\n- In countries with internet restrictions\n\nChoosing a VPN:\n- Avoid free VPNs (may sell your data)\n- Look for no-log policies\n- Check encryption standards\n- Consider speed and server locations\n\nPopular Options: ProtonVPN, NordVPN, ExpressVPN, Mullvad"
+    },
+    {
+      patterns: ["malware", "virus", "trojan", "spyware", "infected computer", "remove virus"],
+      response: "MALWARE PROTECTION\n\nTypes of Malware:\n- Virus: Spreads by attaching to files\n- Trojan: Disguised as legitimate software\n- Spyware: Steals your information secretly\n- Worms: Self-replicating across networks\n- Keyloggers: Records your keystrokes\n\nSigns of Infection:\n- Slow performance\n- Pop-ups and unexpected ads\n- Programs crashing\n- High network activity\n\nRemoval Steps:\n1. Boot in Safe Mode\n2. Run full antivirus scan\n3. Delete malicious files\n4. Reset passwords\n5. Update all software"
+    },
+    {
+      patterns: ["2fa", "mfa", "two factor", "multi factor", "authentication", "2 factor"],
+      response: "TWO-FACTOR AUTHENTICATION (2FA/MFA)\n\nWhat is it?\nAn extra layer of security requiring two forms of verification.\n\nTypes:\n- SMS codes (least secure)\n- Authenticator apps (Google, Microsoft, Authy)\n- Hardware keys (YubiKey)\n- Biometrics (fingerprint, face)\n\nWhere to Enable:\n- Email accounts\n- Banking apps\n- Social media\n- Cloud storage\n- Work applications\n\nRecommendation: Use authenticator apps over SMS for better security."
+    },
+    {
+      patterns: ["social engineering", "manipulation", "tricked", "scammed"],
+      response: "SOCIAL ENGINEERING\n\nWhat is it?\nPsychological manipulation to trick people into revealing information.\n\nCommon Tactics:\n- Pretexting: Fake scenarios to gain trust\n- Baiting: Offering something enticing\n- Tailgating: Following into secure areas\n- Quid Pro Quo: Offering help for info\n\nRed Flags:\n- Urgency and pressure\n- Requests for sensitive info\n- Too-good-to-be-true offers\n- Unusual requests from 'authorities'\n\nProtection:\n- Verify identities before sharing info\n- Be skeptical of unsolicited contacts\n- Follow security policies\n- Report suspicious requests"
+    },
+    {
+      patterns: ["data breach", "data leak", "information stolen", "breach notification"],
+      response: "DATA BREACHES\n\nWhat to Do After a Breach:\n1. Find out what data was exposed\n2. Change affected passwords immediately\n3. Enable 2FA on all accounts\n4. Monitor bank statements closely\n5. Watch for phishing attempts\n6. Consider credit monitoring\n\nCheck if You're Affected:\n- haveibeenpwned.com\n- Breach notification from the company\n\nYour Rights (DPDP Act 2023):\n- Companies must notify you of breaches\n- You can request data deletion\n- Fines up to Rs.250 crore for violations"
+    },
+    {
+      patterns: ["online fraud", "cyber fraud", "money stolen", "bank fraud", "upi fraud", "payment fraud"],
+      response: "ONLINE FINANCIAL FRAUD\n\nCommon Types:\n- UPI fraud\n- Phishing for banking details\n- Fake investment schemes\n- OTP theft\n- Card skimming\n\nImmediate Steps if Frauded:\n1. Call 1930 IMMEDIATELY\n2. Contact your bank to freeze account\n3. File report at cybercrime.gov.in\n4. Preserve all evidence (screenshots, messages)\n5. File FIR at local police station\n\nPrevention:\n- Never share OTP with anyone\n- Don't click unknown payment links\n- Verify QR codes before scanning\n- Use official banking apps only"
+    },
+    {
+      patterns: ["it act", "cyber law", "indian law", "cyber crime law", "information technology act"],
+      response: "INDIAN CYBER LAWS (IT ACT 2000)\n\nKey Sections:\n- Section 43: Unauthorized access (Up to Rs.1 crore compensation)\n- Section 66: Hacking (3 years + Rs.5 lakh fine)\n- Section 66C: Identity theft (3 years + Rs.1 lakh)\n- Section 66D: Phishing/Cheating (3 years)\n- Section 66E: Privacy violation (3 years + Rs.2 lakh)\n- Section 66F: Cyber terrorism (Life imprisonment)\n- Section 67: Obscene content (3-5 years)\n\nDPDP Act 2023:\nRegulates personal data protection with fines up to Rs.250 crore.\n\nAsk about any specific section for more details!"
+    },
+    {
+      patterns: ["wifi", "public wifi", "wifi security", "safe wifi", "hotspot"],
+      response: "WIFI SECURITY\n\nPublic WiFi Risks:\n- Man-in-the-middle attacks\n- Data interception\n- Fake hotspots\n- Session hijacking\n\nSafe Practices:\n- Use VPN on public WiFi\n- Avoid banking on public networks\n- Turn off auto-connect\n- Use HTTPS websites only\n- Forget networks after use\n\nHome WiFi Security:\n- Use WPA3/WPA2 encryption\n- Change default router password\n- Update router firmware\n- Hide network SSID\n- Enable guest network for visitors"
+    },
+    {
+      patterns: ["ddos", "denial of service", "website down", "server attack"],
+      response: "DDOS ATTACKS\n\nWhat is DDoS?\nDistributed Denial of Service - overwhelming servers with traffic to make them unavailable.\n\nSigns of Attack:\n- Website extremely slow or unresponsive\n- Unusual traffic spikes\n- Connection timeouts\n\nProtection:\n- Use DDoS protection services (Cloudflare, AWS Shield)\n- Implement traffic filtering\n- Have redundant infrastructure\n- Monitor traffic patterns\n\nIf Under Attack:\n1. Contact your hosting provider\n2. Enable DDoS protection\n3. Report to CERT-In\n4. Document the incident"
+    },
+    {
+      patterns: ["identity theft", "identity stolen", "someone using my identity", "identity fraud"],
+      response: "IDENTITY THEFT\n\nSigns of Identity Theft:\n- Unknown accounts or loans in your name\n- Bills for services you didn't use\n- Credit score drops unexpectedly\n- IRS notices for income you didn't earn\n- Medical bills for treatments you didn't receive\n\nImmediate Steps:\n1. File police complaint\n2. Report to cybercrime.gov.in\n3. Notify all banks and financial institutions\n4. Place fraud alerts on credit reports\n5. Change all passwords\n6. Monitor credit reports closely\n\nPrevention:\n- Never share Aadhaar, PAN, or personal documents via email\n- Shred sensitive documents\n- Use strong, unique passwords\n- Enable 2FA on all accounts"
+    },
+    {
+      patterns: ["otp", "otp fraud", "otp scam", "someone asking otp", "share otp"],
+      response: "OTP FRAUD\n\nIMPORTANT: Never share OTP with anyone!\n\nCommon OTP Scams:\n- Caller pretending to be bank employee\n- Fake KYC update requests\n- Prize/lottery winning claims\n- Refund processing calls\n- Delivery agent asking for OTP\n\nHow to Protect Yourself:\n- Banks NEVER ask for OTP over phone\n- No legitimate company needs your OTP\n- Hang up on suspicious calls immediately\n- Report fraud calls to 1930\n- Block suspicious numbers\n\nIf You Shared OTP:\n1. Call bank immediately to block card/account\n2. File complaint at cybercrime.gov.in\n3. Call 1930 helpline"
+    },
+    {
+      patterns: ["sim swap", "sim swapping", "sim cloning", "mobile takeover", "sim fraud"],
+      response: "SIM SWAP FRAUD\n\nWhat is SIM Swap?\nFraudsters get a duplicate SIM of your number to access OTPs and banking accounts.\n\nWarning Signs:\n- Sudden loss of mobile network\n- Unable to make calls or receive SMS\n- Bank notifications you didn't initiate\n\nPrevention:\n- Don't share mobile number publicly\n- Set up SIM lock/PIN\n- Use app-based 2FA instead of SMS\n- Register for bank transaction alerts on email too\n\nIf Network Suddenly Gone:\n1. Contact mobile provider immediately\n2. Ask if duplicate SIM was issued\n3. Block banking transactions\n4. Report to cybercrime.gov.in"
+    },
+    {
+      patterns: ["crypto", "cryptocurrency", "bitcoin scam", "crypto fraud", "investment scam"],
+      response: "CRYPTOCURRENCY SCAMS\n\nCommon Crypto Scams:\n- Fake investment platforms promising high returns\n- Celebrity endorsement scams\n- Pump and dump schemes\n- Fake exchange platforms\n- Romance scams asking for crypto\n\nRed Flags:\n- Guaranteed profits\n- Pressure to invest quickly\n- Celebrity endorsements on unknown platforms\n- Requests to pay in crypto\n\nProtection:\n- Research before investing\n- Use only verified exchanges\n- Never share wallet keys\n- Be skeptical of unrealistic returns\n\nReporting:\n- cybercrime.gov.in\n- RBI Ombudsman for financial fraud"
+    },
+    {
+      patterns: ["sextortion", "blackmail", "intimate photos", "private photos leaked", "video call blackmail"],
+      response: "SEXTORTION\n\nWhat is Sextortion?\nBlackmail using real or fake intimate content to extort money.\n\nImmediate Steps if Targeted:\n1. Do NOT pay the blackmailer\n2. Save all evidence (screenshots, messages)\n3. Report to cybercrime.gov.in immediately\n4. Call 1930 helpline\n5. Block the person on all platforms\n\nImportant:\n- Paying rarely stops blackmail\n- Under Section 66E of IT Act, this is punishable\n- Police take these cases seriously\n\nPrevention:\n- Be cautious with video calls from strangers\n- Never share intimate content online\n- Cover webcam when not in use"
+    },
+    {
+      patterns: ["job fraud", "fake job", "job scam", "work from home fraud", "recruitment scam"],
+      response: "JOB FRAUD\n\nCommon Job Scams:\n- Work from home with high pay\n- Data entry jobs with registration fee\n- YouTube like/subscribe jobs\n- Instagram promotion schemes\n- Fake company hiring emails\n\nRed Flags:\n- Upfront payment required\n- No interview or quick hiring\n- High pay for simple tasks\n- Communication only via WhatsApp\n- No company website/address\n\nProtection:\n- Research company before applying\n- Never pay for jobs\n- Verify job postings on official websites\n- Report fraud to cybercrime.gov.in\n\nLegitimate companies NEVER ask for money upfront."
+    },
+    {
+      patterns: ["loan app", "instant loan", "lending app", "loan fraud", "loan harassment"],
+      response: "LOAN APP FRAUD\n\nDangers of Illegal Loan Apps:\n- Access all your contacts and photos\n- Extremely high interest rates\n- Harassment calls to you and contacts\n- Morphed photos as blackmail\n\nIf Being Harassed:\n1. File complaint at cybercrime.gov.in\n2. Report to RBI (rbi.org.in)\n3. File FIR at local police station\n4. Keep evidence of harassment\n\nProtection:\n- Only use RBI-registered NBFCs\n- Check app permissions before installing\n- Verify lender credentials\n- Read terms carefully\n\nRBI List of authorized digital lenders: rbi.org.in"
+    },
+    {
+      patterns: ["qr code", "qr scam", "qr code fraud", "scan qr"],
+      response: "QR CODE SCAMS\n\nImportant: QR codes are for PAYING, not receiving money!\n\nCommon QR Scams:\n- Seller asks you to scan QR to 'receive' payment\n- Fake customer care QR codes\n- Malicious QR codes on public places\n\nHow It Works:\n- Scanning a QR and entering PIN = Paying money\n- Never scan QR if someone says 'you will receive money'\n\nProtection:\n- Never scan unknown QR codes\n- For receiving money, share your UPI ID or number\n- Report fraud to 1930\n\nRemember: You DON'T need to scan QR or enter PIN to receive money!"
+    },
+    {
+      patterns: ["section 66", "66 of it act", "hacking law"],
+      response: "SECTION 66 OF IT ACT\n\nSection 66 - Computer Related Offences\n\nCovers:\n- Unauthorized access to computer systems\n- Data theft or destruction\n- Spreading viruses or malware\n- Hacking into systems\n\nPenalty:\n- Imprisonment up to 3 years\n- Fine up to Rs 5 lakh\n- Or both\n\nRelated Sections:\n- 66A: Offensive messages (struck down by Supreme Court)\n- 66B: Receiving stolen computer data\n- 66C: Identity theft\n- 66D: Cheating by personation\n- 66E: Privacy violation\n- 66F: Cyber terrorism"
+    },
+    {
+      patterns: ["section 67", "obscene content", "pornography law"],
+      response: "SECTION 67 OF IT ACT\n\nSection 67 - Obscene Material\n\nCovers:\n- Publishing obscene material electronically\n- Transmitting sexually explicit content\n- Hosting obscene content on websites\n\nPenalty:\n- First offense: 3 years + Rs 5 lakh fine\n- Second offense: 5 years + Rs 10 lakh fine\n\nRelated Sections:\n- 67A: Sexually explicit content (5 years + Rs 10 lakh)\n- 67B: Child pornography (5-7 years + Rs 10 lakh)\n\nReport such content:\n- cybercrime.gov.in\n- NCB (National Commission for Women) for women-related crimes"
+    },
+    {
+      patterns: ["online harassment", "cyber bullying", "trolling", "hate message", "threatening online"],
+      response: "ONLINE HARASSMENT\n\nTypes:\n- Cyber bullying and trolling\n- Threatening messages\n- Hate speech\n- Stalking on social media\n- Defamation\n\nLegal Protection:\n- Section 66A IT Act (struck down, but 507 IPC applicable)\n- Section 354D IPC for stalking\n- Section 499/500 IPC for defamation\n- Section 506 IPC for criminal intimidation\n\nSteps to Take:\n1. Screenshot and save all evidence\n2. Block the harasser\n3. Report to platform (most have report options)\n4. File complaint at cybercrime.gov.in\n5. File FIR if threats are serious"
+    },
+    {
+      patterns: ["safe online", "internet safety", "online safety", "safe browsing", "stay safe online"],
+      response: "ONLINE SAFETY TIPS\n\nBasic Protection:\n- Use strong, unique passwords\n- Enable 2FA on all accounts\n- Keep software updated\n- Install reputable antivirus\n\nSafe Browsing:\n- Look for HTTPS in URLs\n- Don't click unknown links\n- Avoid suspicious downloads\n- Use ad blockers\n\nSocial Media Safety:\n- Limit personal info sharing\n- Review privacy settings regularly\n- Be cautious of friend requests from strangers\n- Don't share location publicly\n\nFinancial Safety:\n- Never share OTP, PIN, or CVV\n- Use official banking apps only\n- Monitor transactions regularly\n- Report suspicious activity immediately"
+    },
+    {
+      patterns: ["antivirus", "which antivirus", "best antivirus", "free antivirus"],
+      response: "ANTIVIRUS SOFTWARE\n\nRecommended Options:\n\nFree:\n- Windows Defender (built-in, good protection)\n- Avast Free\n- AVG Free\n- Bitdefender Free\n\nPaid (more features):\n- Norton 360\n- Kaspersky\n- Bitdefender Total Security\n- McAfee\n\nTips:\n- Keep antivirus updated\n- Run regular scans\n- Don't install multiple antivirus programs\n- Windows Defender is sufficient for most users\n\nMobile:\n- Android: Built-in Play Protect\n- iPhone: Generally doesn't need antivirus\n- Download apps only from official stores"
+    },
+    {
+      patterns: ["backup", "data backup", "how to backup", "backup data"],
+      response: "DATA BACKUP\n\nWhy Backup?\n- Protection against ransomware\n- Hardware failure recovery\n- Accidental deletion recovery\n\nBackup Methods:\n\n1. Cloud Backup:\n- Google Drive, OneDrive, iCloud\n- Automatic sync\n- Accessible anywhere\n\n2. External Hard Drive:\n- Full local backup\n- Keep disconnected when not backing up\n- Store in safe location\n\n3. 3-2-1 Rule:\n- 3 copies of data\n- 2 different storage types\n- 1 offsite/cloud\n\nFrequency:\n- Critical data: Daily\n- General files: Weekly\n- Full system: Monthly"
+    }
+  ];
+
+  // Check FAQ patterns first for direct matching
+  for (const faq of faqPatterns) {
+    for (const pattern of faq.patterns) {
+      if (lowerInput.includes(pattern)) {
+        return faq.response;
+      }
+    }
+  }
+
+  // Handle cybersecurity general questions
   if (
     lowerInput.includes("cybersecurity") ||
     lowerInput.includes("cyber security")
   ) {
-    return "🛡️ Cybersecurity\nDescription: Cybersecurity involves protecting systems, networks, and data from digital attacks, unauthorized access, or damage.\nMeasures: Includes encryption, firewalls, and multi-factor authentication to prevent threats like phishing, ransomware, and data breaches.";
+    return "CYBERSECURITY\n\nDefinition: Cybersecurity involves protecting systems, networks, and data from digital attacks, unauthorized access, or damage.\n\nKey Areas:\n- Network Security\n- Endpoint Security\n- Application Security\n- Data Protection\n- Cloud Security\n\nCommon Threats: Phishing, Ransomware, Malware, DDoS attacks\n\nProtection Measures: Encryption, Firewalls, MFA, Regular updates, Security awareness\n\nWould you like to know more about any specific aspect?";
   }
 
   for (const law of cybersecurityData.cyberLaws) {
@@ -532,9 +680,8 @@ export const generateRuleBasedResponse = (input) => {
       }
 
     case "practice":
-      return `👤 ${topMatch.item.name}\nDescription: ${
-        topMatch.item.description
-      }\nSteps: ${topMatch.item.steps.join(", ")}`;
+      return `👤 ${topMatch.item.name}\nDescription: ${topMatch.item.description
+        }\nSteps: ${topMatch.item.steps.join(", ")}`;
 
     case "vector":
       if (intents.includes("definition")) {
@@ -548,9 +695,8 @@ export const generateRuleBasedResponse = (input) => {
       }
 
     case "incidentResponse":
-      return `👤 ${topMatch.item.name}\nDescription: ${
-        topMatch.item.description
-      }\nSteps: ${topMatch.item.steps.join(", ")}`;
+      return `👤 ${topMatch.item.name}\nDescription: ${topMatch.item.description
+        }\nSteps: ${topMatch.item.steps.join(", ")}`;
 
     case "tips":
       return topMatch.item.description;

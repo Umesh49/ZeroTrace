@@ -47,7 +47,7 @@ const BreachExposureChecker = () => {
     <div className="security-tools">
       <div className="sec-tool-container">
         <div className="sec-tool-header">
-          <h1 className="sec-tool-title">Breach Exposure Checker</h1>
+          <h1 className="sec-tool-title page-title">Breach Exposure Checker</h1>
           <p className="sec-tool-subtitle">Check if your password has been exposed in data breaches</p>
         </div>
 

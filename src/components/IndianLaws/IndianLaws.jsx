@@ -237,7 +237,7 @@ export default function IndianLaws() {
 
       <div className="indian-laws-terminal-body">
         <div className="indian-laws-cyber-header">
-          <h1>&gt;_
+          <h1 className="page-title">&gt;_
             Indian Cyber Laws <span className="indian-laws-blink">_</span>
           </h1>
           <div className="indian-laws-matrix-animation"></div>
@@ -287,9 +287,8 @@ export default function IndianLaws() {
                   aria-label="Change view"
                 >
                   <button
-                    className={`indian-laws-view-button ${
-                      view === "grid" ? "indian-laws-active" : ""
-                    }`}
+                    className={`indian-laws-view-button ${view === "grid" ? "indian-laws-active" : ""
+                      }`}
                     onClick={() => setView("grid")}
                     title="Grid View"
                     aria-pressed={view === "grid"}
@@ -297,9 +296,8 @@ export default function IndianLaws() {
                     <Grid size={16} />
                   </button>
                   <button
-                    className={`indian-laws-view-button ${
-                      view === "list" ? "indian-laws-active" : ""
-                    }`}
+                    className={`indian-laws-view-button ${view === "list" ? "indian-laws-active" : ""
+                      }`}
                     onClick={() => setView("list")}
                     title="List View"
                     aria-pressed={view === "list"}
@@ -453,18 +451,16 @@ export default function IndianLaws() {
           </div>
         ) : (
           <div
-            className={`indian-laws-container ${
-              view === "grid"
+            className={`indian-laws-container ${view === "grid"
                 ? "indian-laws-grid-view"
                 : "indian-laws-list-view"
-            }`}
+              }`}
           >
             {filteredLaws.map((law) => (
               <div
                 key={law.id}
-                className={`indian-laws-cyber-panel indian-laws-law-card ${
-                  expandedLaw === law.id ? "indian-laws-expanded" : ""
-                }`}
+                className={`indian-laws-cyber-panel indian-laws-law-card ${expandedLaw === law.id ? "indian-laws-expanded" : ""
+                  }`}
               >
                 <div
                   className="indian-laws-law-header"

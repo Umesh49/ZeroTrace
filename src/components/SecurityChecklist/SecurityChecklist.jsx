@@ -170,7 +170,7 @@ function SecurityChecklist() {
   return (
     <div className="security-checklist-container">
       <header className="security-checklist-page-header">
-        <h1 className="security-checklist-page-title">
+        <h1 className="security-checklist-page-title page-title">
           <span className="security-checklist-title-prefix">&gt;_</span> Security Checklist
         </h1>
         <p className="security-checklist-page-subtitle">

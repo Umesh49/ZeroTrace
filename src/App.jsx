@@ -5,6 +5,9 @@ import SplashScreen from "./components/SplashScreen/SplashScreen";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import AppRoutes from "./routes";
+import ErrorBoundary from "./components/common/ErrorBoundary";
+import PageTransition, { SkipToContent } from "./components/common/PageTransition/PageTransition";
+import "./components/common/PageTransition/PageTransition.css";
 import "./App.css";
 
 const ScrollToTop = () => {
@@ -20,10 +23,15 @@ const ScrollToTop = () => {
 const MainLayout = () => {
   return (
     <>
+      <SkipToContent targetId="main-content" />
       <Header />
       <ScrollToTop />
-      <main className="main-content">
-        <AppRoutes />
+      <main id="main-content" className="main-content">
+        <ErrorBoundary>
+          <PageTransition variant="fade">
+            <AppRoutes />
+          </PageTransition>
+        </ErrorBoundary>
       </main>
       <Footer />
     </>

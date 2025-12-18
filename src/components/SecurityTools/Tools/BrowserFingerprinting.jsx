@@ -43,7 +43,7 @@ const BrowserFingerprinting = () => {
     <div className="security-tools">
       <div className="sec-tool-container">
         <div className="sec-tool-header">
-          <h1 className="sec-tool-title">Browser Fingerprinting</h1>
+          <h1 className="sec-tool-title page-title">Browser Fingerprinting</h1>
           <p className="sec-tool-subtitle">See how unique your browser fingerprint is</p>
         </div>
 

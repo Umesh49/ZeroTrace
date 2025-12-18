@@ -361,7 +361,7 @@ function SecurityNews() {
     <div className="news-page">
       <div className="security-news-container">
         <div className="news-page-header">
-          <h1 className="news-page-title">Security News</h1>
+          <h1 className="news-page-title page-title">Security News</h1>
           <p className="news-page-subtitle">Latest cybersecurity news and updates</p>
         </div>
 

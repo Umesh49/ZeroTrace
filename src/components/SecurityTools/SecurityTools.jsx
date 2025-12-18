@@ -361,17 +361,17 @@ const SecurityTools = () => {
 
   const filteredCategories = searchQuery
     ? toolCategories.filter(
-        (category) =>
-          category.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          category.description
-            .toLowerCase()
-            .includes(searchQuery.toLowerCase()) ||
-          category.tools.some(
-            (tool) =>
-              tool.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-              tool.description.toLowerCase().includes(searchQuery.toLowerCase())
-          )
-      )
+      (category) =>
+        category.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        category.description
+          .toLowerCase()
+          .includes(searchQuery.toLowerCase()) ||
+        category.tools.some(
+          (tool) =>
+            tool.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            tool.description.toLowerCase().includes(searchQuery.toLowerCase())
+        )
+    )
     : toolCategories;
 
   const adjustColorBrightness = (hex, percent) => {
@@ -403,7 +403,7 @@ const SecurityTools = () => {
     <div className="sec-tm-container">
       <div className="sec-tm-content">
         <section className="sec-tm-header">
-          <h1 className="sec-tm-title">
+          <h1 className="sec-tm-title page-title">
             <span className="sec-tm-title-prefix">&gt;</span>
             Security Toolkit Portal
           </h1>
@@ -419,9 +419,8 @@ const SecurityTools = () => {
         >
           <div className="sec-tm-search-container">
             <div
-              className={`sec-tm-search-input-group ${
-                searchFocused ? "focused" : ""
-              }`}
+              className={`sec-tm-search-input-group ${searchFocused ? "focused" : ""
+                }`}
             >
               <span className="sec-tm-search-icon" aria-hidden="true">
                 <Search size={18} />

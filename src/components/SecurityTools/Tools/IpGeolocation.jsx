@@ -38,7 +38,7 @@ const IpGeolocation = () => {
     <div className="security-tools">
       <div className="sec-tool-container">
         <div className="sec-tool-header">
-          <h1 className="sec-tool-title">IP Geolocation</h1>
+          <h1 className="sec-tool-title page-title">IP Geolocation</h1>
           <p className="sec-tool-subtitle">Find the geographical location of an IP address</p>
         </div>
         <div className="sec-tool-card">
@@ -73,12 +73,15 @@ const IpGeolocation = () => {
                 <h4 className="sec-tool-result-header">IP Geolocation Results:</h4>
                 <div className="sec-tool-geo-details">
                   <div className="sec-tool-geo-map">
-                    <img
-                      src={`https://maps.googleapis.com/maps/api/staticmap?center=${result.lat},${result.lon}&zoom=10&size=400x200&markers=color:red%7C${result.lat},${result.lon}&key=YOUR_API_KEY`}
-                      alt="Location Map"
-                      className="sec-tool-map-image"
-                    />
-                    <p className="sec-tool-map-note">Map preview unavailable in demo mode</p>
+                    <a
+                      href={`https://www.openstreetmap.org/?mlat=${result.lat}&mlon=${result.lon}#map=10/${result.lat}/${result.lon}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="sec-tool-button"
+                      style={{ display: 'inline-block', marginBottom: '1rem' }}
+                    >
+                      View on OpenStreetMap
+                    </a>
                   </div>
                   <table className="sec-tool-table">
                     <tbody>
