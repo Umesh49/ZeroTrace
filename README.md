@@ -239,9 +239,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 👨‍💻 Author
 
-**Umesh**
-
-- Website: [zerotrace.in](https://zerotrace.in)
+**Umesh Y**
 
 ---
 
