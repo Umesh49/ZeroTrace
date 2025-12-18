@@ -8,7 +8,8 @@ A comprehensive cybersecurity awareness and education platform designed to help 
 
 ## 🌐 Live Demo
 
-**Website:** [https://zero-trace-uy.web.app](https://zero-trace-uy.web.app)
+**Website:** [https://zero-trace-uy.web.app](https://zero-trace-uy.web.app) 
+*Some features might not work since the API keys may have expired.*
 
 ---
 
